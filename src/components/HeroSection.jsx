@@ -27,7 +27,7 @@ export const HeroSection = ({ onOpenWindow }) => {
     {
       title: t("hero.cv"),
       icon: <IconFileText className="h-full w-full text-foreground/80" />,
-      href: language === 'fr' ? 'https://raw.githubusercontent.com/Le-skal/js_portfolio/main/docs/CV_FR.pdf' : 'https://raw.githubusercontent.com/Le-skal/Porfolio/main/docs/CV_EN.pdf',
+      href: language === 'fr' ? 'https://raw.githubusercontent.com/Le-skal/js_portfolio/main/docs/CV_FR.pdf' : 'https://raw.githubusercontent.com/Le-skal/js_portfolio/main/docs/CV_EN.pdf',
     },
     {
       title: "GitHub",
@@ -81,11 +81,11 @@ export const HeroSection = ({ onOpenWindow }) => {
               <div className="relative">
                 <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter leading-none">
                   <span className="text-transparent bg-clip-text inline-block hover:scale-105 transition-transform duration-300"
-                        style={{
-                          backgroundImage: 'linear-gradient(90deg, #a78bfa, #c084fc, #f0abfc, #c084fc, #a78bfa)',
-                          backgroundSize: '200% 100%',
-                          animation: 'gradient-shift 8s ease-in-out infinite'
-                        }}>
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg, #a78bfa, #c084fc, #f0abfc, #c084fc, #a78bfa)',
+                      backgroundSize: '200% 100%',
+                      animation: 'gradient-shift 8s ease-in-out infinite'
+                    }}>
                     {t("hero.name")} {t("hero.lastname")}
                   </span>
                 </h2>
