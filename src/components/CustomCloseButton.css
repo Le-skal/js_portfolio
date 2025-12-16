@@ -106,7 +106,7 @@
   position: absolute;
   width: 20vw;
   height: 3vh;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
   top: 50%;
   left: 50%;
   opacity: 0;
@@ -152,6 +152,7 @@
     clip-path: inset(0 100% 0 0);
     opacity: 1;
   }
+
   100% {
     clip-path: inset(0 0 0 0);
     opacity: 1;
@@ -164,6 +165,7 @@
     clip-path: inset(0 100% 0 0);
     opacity: 1;
   }
+
   100% {
     clip-path: inset(0 0 0 0);
     opacity: 1;
@@ -176,6 +178,7 @@
     clip-path: inset(0 0 0 0);
     opacity: 1;
   }
+
   100% {
     clip-path: inset(0 100% 0 0);
     opacity: 0;

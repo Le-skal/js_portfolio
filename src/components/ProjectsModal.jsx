@@ -4,10 +4,6 @@ import JsBackground from "./JsBackground";
 import { CustomCloseButton } from "./CustomCloseButton";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Import JSON files
-import projectsEnJson from "@/projects_data/projects_en.json";
-import projectsFrJson from "@/projects_data/projects_fr.json";
-
 // Helper function to convert JSON projects to carousel format
 const convertJsonToProjects = (jsonData) => {
   const projectKeys = ["Scraping-boulanger", "TripHackathon", "ABDD"];
@@ -128,17 +124,17 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
         }}
       >
         {/* Hero Section */}
-        <div className="pt-24 pb-16 px-12 max-w-6xl mx-auto">
+        <div className="pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 md:pb-16 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto">
           {/* Title */}
-          <h1 className="text-6xl font-light mb-8 tracking-tight">{project.title}</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 md:mb-8 tracking-tight">{project.title}</h1>
 
           {/* Description */}
-          <p className="text-2xl font-light leading-relaxed mb-16 text-white/90">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-light leading-relaxed mb-8 sm:mb-12 md:mb-16 text-white/90">
             {project.description}
           </p>
 
           {/* Project Meta Info */}
-          <div className="grid grid-cols-4 gap-8 text-sm mb-16 pb-8 border-b border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 text-sm mb-8 sm:mb-12 md:mb-16 pb-6 sm:pb-8 border-b border-white/10">
             <div>
               <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2">{t("projectDetail.category")}</h4>
               <p className="text-white/80">{project.fullData?.metadata?.category || project.client}</p>
@@ -151,13 +147,13 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
               <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2">{t("projectDetail.timeline")}</h4>
               <p className="text-white/80">{project.fullData?.metadata?.timeline || "2024"}</p>
             </div>
-            <div className="flex items-end gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:col-span-2 lg:col-span-1">
               {project.fullData?.metadata?.liveUrl && project.fullData.metadata.liveUrl !== "null" && (
                 <a
                   href={project.fullData.metadata.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border border-white/20 text-white hover:bg-white/5 transition-colors text-xs uppercase tracking-wider font-medium"
+                  className="px-4 sm:px-6 py-2 sm:py-3 border border-white/20 text-white hover:bg-white/5 transition-colors text-xs uppercase tracking-wider font-medium text-center"
                 >
                   {t("projectDetail.liveSite")} →
                 </a>
@@ -167,7 +163,7 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
                   href={project.fullData.metadata.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border border-white/20 text-white hover:bg-white/5 transition-colors text-xs uppercase tracking-wider font-medium flex items-center gap-2"
+                  className="px-4 sm:px-6 py-2 sm:py-3 border border-white/20 text-white hover:bg-white/5 transition-colors text-xs uppercase tracking-wider font-medium flex items-center justify-center gap-2"
                 >
                   <Github size={14} />
                   {t("projectDetail.github")}
@@ -178,8 +174,8 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
         </div>
 
         {/* Gallery Section */}
-        <div className="px-12 max-w-6xl mx-auto py-12">
-          <div className="space-y-8">
+        <div className="px-4 sm:px-6 md:px-12 max-w-6xl mx-auto py-6 sm:py-8 md:py-12">
+          <div className="space-y-6 sm:space-y-8">
             {/* Main project image */}
             <div className="rounded-lg overflow-hidden">
               <img
@@ -190,20 +186,20 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
             </div>
 
             {/* Project Details */}
-            <div className="py-12 space-y-12">
+            <div className="py-6 sm:py-8 md:py-12 space-y-6 sm:space-y-8 md:space-y-12">
               {/* Overview */}
               {project.fullData?.overview && (
                 <div>
-                  <h3 className="text-sm font-medium text-white/50 uppercase tracking-wider mb-6">{t("projectDetail.overview")}</h3>
-                  <p className="text-white/70 leading-relaxed text-lg">{project.fullData.overview}</p>
+                  <h3 className="text-sm font-medium text-white/50 uppercase tracking-wider mb-3 sm:mb-4 md:mb-6">{t("projectDetail.overview")}</h3>
+                  <p className="text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">{project.fullData.overview}</p>
                 </div>
               )}
 
               {/* Challenge */}
               {project.fullData?.challenge && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">{t("projectDetail.challenge")}</h3>
-                  <div className="space-y-4 text-white/70 leading-relaxed text-lg">
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">{t("projectDetail.challenge")}</h3>
+                  <div className="space-y-3 sm:space-y-4 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                     {project.fullData.challenge.problem && <p><strong className="text-white/90">{t("projectDetail.problem")}:</strong> {project.fullData.challenge.problem}</p>}
                     {project.fullData.challenge.goal && <p><strong className="text-white/90">{t("projectDetail.goal")}:</strong> {project.fullData.challenge.goal}</p>}
                     {project.fullData.challenge.constraints && <p><strong className="text-white/90">{t("projectDetail.constraints")}:</strong> {project.fullData.challenge.constraints}</p>}
@@ -213,9 +209,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Discovery */}
               {project.fullData?.discovery && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">Discovery</h3>
-                  <div className="space-y-4 text-white/70 leading-relaxed text-lg">
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">Discovery</h3>
+                  <div className="space-y-3 sm:space-y-4 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                     {project.fullData.discovery.requirements && <p><strong className="text-white/90">Requirements:</strong> {project.fullData.discovery.requirements}</p>}
                     {project.fullData.discovery.competitiveAnalysis && <p><strong className="text-white/90">Competitive Analysis:</strong> {project.fullData.discovery.competitiveAnalysis}</p>}
                     {project.fullData.discovery.technicalResearch && <p><strong className="text-white/90">Technical Research:</strong> {project.fullData.discovery.technicalResearch}</p>}
@@ -225,9 +221,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Architecture */}
               {project.fullData?.architecture && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">Architecture</h3>
-                  <div className="space-y-4 text-white/70 leading-relaxed text-lg">
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">Architecture</h3>
+                  <div className="space-y-3 sm:space-y-4 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                     {project.fullData.architecture.informationArchitecture && <p><strong className="text-white/90">Information Architecture:</strong> {project.fullData.architecture.informationArchitecture}</p>}
                     {project.fullData.architecture.technicalDecisions && <p><strong className="text-white/90">Technical Decisions:</strong> {project.fullData.architecture.technicalDecisions}</p>}
                   </div>
@@ -236,9 +232,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Development Process */}
               {project.fullData?.developmentProcess && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">{t("projectDetail.developmentProcess")}</h3>
-                  <div className="space-y-4 text-white/70 leading-relaxed text-lg">
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">{t("projectDetail.developmentProcess")}</h3>
+                  <div className="space-y-3 sm:space-y-4 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                     {project.fullData.developmentProcess.phase1 && <p><strong className="text-white/90">Phase 1:</strong> {project.fullData.developmentProcess.phase1}</p>}
                     {project.fullData.developmentProcess.phase2 && <p><strong className="text-white/90">Phase 2:</strong> {project.fullData.developmentProcess.phase2}</p>}
                     {project.fullData.developmentProcess.phase3 && <p><strong className="text-white/90">Phase 3:</strong> {project.fullData.developmentProcess.phase3}</p>}
@@ -248,11 +244,11 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Key Features */}
               {project.fullData?.keyFeatures && project.fullData.keyFeatures.length > 0 && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">{t("projectDetail.keyFeatures")}</h3>
-                  <div className="space-y-6">
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">{t("projectDetail.keyFeatures")}</h3>
+                  <div className="space-y-4 sm:space-y-6">
                     {project.fullData.keyFeatures.map((feature, idx) => (
-                      <div key={idx} className="text-white/70 leading-relaxed text-lg">
+                      <div key={idx} className="text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                         {feature.title && <p className="font-semibold text-white/90 mb-2">{feature.title}</p>}
                         {feature.description && <p>{feature.description}</p>}
                         {feature.implementation && <p className="mt-2"><strong className="text-white/90">Implementation:</strong> {feature.implementation}</p>}
@@ -265,39 +261,39 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Testing */}
               {project.fullData?.testing && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">Testing</h3>
-                  <p className="text-white/70 leading-relaxed text-lg">{project.fullData.testing}</p>
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">Testing</h3>
+                  <p className="text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">{project.fullData.testing}</p>
                 </div>
               )}
 
               {/* Tech Stack */}
               {project.fullData?.techStack && (
-                <div className="py-8 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-6">{t("projectDetail.techStack")}</h3>
-                  <div className="grid grid-cols-2 gap-6">
+                <div className="py-4 sm:py-6 md:py-8 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 md:mb-6">{t("projectDetail.techStack")}</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     {project.fullData.techStack.frontend && project.fullData.techStack.frontend !== "" && (
                       <div>
-                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-3">{t("projectDetail.frontend")}</h4>
-                        <p className="text-white/80">{project.fullData.techStack.frontend}</p>
+                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2 sm:mb-3">{t("projectDetail.frontend")}</h4>
+                        <p className="text-white/80 text-sm sm:text-base">{project.fullData.techStack.frontend}</p>
                       </div>
                     )}
                     {project.fullData.techStack.backend && project.fullData.techStack.backend !== "" && (
                       <div>
-                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-3">{t("projectDetail.backend")}</h4>
-                        <p className="text-white/80">{project.fullData.techStack.backend}</p>
+                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2 sm:mb-3">{t("projectDetail.backend")}</h4>
+                        <p className="text-white/80 text-sm sm:text-base">{project.fullData.techStack.backend}</p>
                       </div>
                     )}
                     {project.fullData.techStack.tools && (
                       <div>
-                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-3">{t("projectDetail.tools")}</h4>
-                        <p className="text-white/80">{project.fullData.techStack.tools}</p>
+                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2 sm:mb-3">{t("projectDetail.tools")}</h4>
+                        <p className="text-white/80 text-sm sm:text-base">{project.fullData.techStack.tools}</p>
                       </div>
                     )}
                     {project.fullData.techStack.libraries && (
                       <div>
-                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-3">{t("projectDetail.libraries")}</h4>
-                        <p className="text-white/80">{project.fullData.techStack.libraries}</p>
+                        <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2 sm:mb-3">{t("projectDetail.libraries")}</h4>
+                        <p className="text-white/80 text-sm sm:text-base">{project.fullData.techStack.libraries}</p>
                       </div>
                     )}
                   </div>
@@ -306,9 +302,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Results Section */}
               {project.fullData?.results && (
-                <div className="py-12 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-8">{t("projectDetail.results")}</h3>
-                  <div className="space-y-6 text-white/70 leading-relaxed text-lg">
+                <div className="py-6 sm:py-8 md:py-12 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-4 sm:mb-6 md:mb-8">{t("projectDetail.results")}</h3>
+                  <div className="space-y-4 sm:space-y-6 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                     {project.fullData.results.technicalAchievements && (
                       <p><strong className="text-white/90">{t("projectDetail.technicalAchievements")}:</strong> {project.fullData.results.technicalAchievements}</p>
                     )}
@@ -324,9 +320,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Key Learnings */}
               {project.fullData?.learnings && project.fullData.learnings.length > 0 && (
-                <div className="py-12 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-8">{t("projectDetail.keyLearnings")}</h3>
-                  <ul className="space-y-4 text-white/70 leading-relaxed text-lg list-disc list-inside">
+                <div className="py-6 sm:py-8 md:py-12 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-4 sm:mb-6 md:mb-8">{t("projectDetail.keyLearnings")}</h3>
+                  <ul className="space-y-3 sm:space-y-4 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg list-disc list-inside">
                     {project.fullData.learnings.map((learning, idx) => (
                       <li key={idx}>{learning}</li>
                     ))}
@@ -336,9 +332,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Future Enhancements */}
               {project.fullData?.futureEnhancements && project.fullData.futureEnhancements.length > 0 && (
-                <div className="py-12 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-8">{t("projectDetail.futureEnhancements")}</h3>
-                  <ul className="space-y-4 text-white/70 leading-relaxed text-lg list-disc list-inside">
+                <div className="py-6 sm:py-8 md:py-12 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-4 sm:mb-6 md:mb-8">{t("projectDetail.futureEnhancements")}</h3>
+                  <ul className="space-y-3 sm:space-y-4 text-white/70 leading-relaxed text-sm sm:text-base md:text-lg list-disc list-inside">
                     {project.fullData.futureEnhancements.map((enhancement, idx) => (
                       <li key={idx}>{enhancement}</li>
                     ))}
@@ -348,9 +344,9 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
               {/* Conclusion */}
               {project.fullData?.conclusion && (
-                <div className="py-12 border-t border-white/10">
-                  <h3 className="text-4xl font-light mb-8">{t("projectDetail.conclusion")}</h3>
-                  <p className="text-white/70 leading-relaxed text-lg">{project.fullData.conclusion}</p>
+                <div className="py-6 sm:py-8 md:py-12 border-t border-white/10">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-light mb-4 sm:mb-6 md:mb-8">{t("projectDetail.conclusion")}</h3>
+                  <p className="text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">{project.fullData.conclusion}</p>
                 </div>
               )}
             </div>
@@ -358,10 +354,10 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
         </div>
 
         {/* Bottom Navigation */}
-        <div className="px-12 max-w-6xl mx-auto py-16 pb-24 border-t border-white/10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 flex-1">
-              <span className="text-xs uppercase tracking-wider text-white/30">Scroll for menu</span>
+        <div className="px-4 sm:px-6 md:px-12 max-w-6xl mx-auto py-8 sm:py-12 md:py-16 pb-12 sm:pb-16 md:pb-24 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+            <div className="flex items-center gap-4 flex-1 w-full sm:w-auto">
+              <span className="text-xs uppercase tracking-wider text-white/30 whitespace-nowrap">Scroll for menu</span>
               <div
                 ref={scrollIndicatorRef}
                 className="flex-1 h-px bg-white/10 transition-all duration-300"
@@ -374,7 +370,7 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
             </div>
             <a
               href={project.githubUrl}
-              className="px-8 py-3 border border-white/20 text-white hover:bg-white/5 transition-colors text-xs uppercase tracking-wider font-medium ml-8"
+              className="px-6 sm:px-8 py-2 sm:py-3 border border-white/20 text-white hover:bg-white/5 transition-colors text-xs uppercase tracking-wider font-medium sm:ml-8 w-full sm:w-auto text-center"
             >
               GitHub →
             </a>
@@ -394,11 +390,46 @@ export const ProjectsModal = ({ onClose }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [scrollToBottom, setScrollToBottom] = useState(false);
   const [isCarouselEntering, setIsCarouselEntering] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [projectsData, setProjectsData] = useState(null);
+
+  // Load projects JSON from public folder
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const jsonFile = language === 'fr' ? '/projects_json/projects_fr.json' : '/projects_json/projects_en.json';
+        const response = await fetch(jsonFile);
+        const data = await response.json();
+        setProjectsData(data);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+      }
+    };
+    loadProjects();
+  }, [language]);
 
   // Get projects based on current language
-  const projects = convertJsonToProjects(language === 'fr' ? projectsFrJson : projectsEnJson);
+  const projects = projectsData ? convertJsonToProjects(projectsData) : [];
 
-  const [carouselItems, setCarouselItems] = useState(() => {
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const [carouselItems, setCarouselItems] = useState([]);
+
+  // Update carousel items when projects data changes
+  useEffect(() => {
+    if (!projectsData) return;
+
+    const projects = convertJsonToProjects(projectsData);
+    if (projects.length === 0) return;
+
     // Create carousel with 5 copies of the projects for infinite scrolling
     // With 3 projects, this creates 15 items total
     const items = [];
@@ -407,21 +438,8 @@ export const ProjectsModal = ({ onClose }) => {
         items.push({ ...project, carouselId: `${project.id}-${i}` });
       });
     }
-    // Don't rotate - keep original order so items are on both sides
-    return items;
-  });
-
-  // Update carousel items when language changes
-  useEffect(() => {
-    const newProjects = convertJsonToProjects(language === 'fr' ? projectsFrJson : projectsEnJson);
-    const items = [];
-    for (let i = 0; i < 5; i++) {
-      newProjects.forEach((project) => {
-        items.push({ ...project, carouselId: `${project.id}-${i}` });
-      });
-    }
     setCarouselItems(items);
-  }, [language]);
+  }, [projectsData]);
 
   const [isClosing, setIsClosing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -447,7 +465,7 @@ export const ProjectsModal = ({ onClose }) => {
   const [animStage, setAnimStage] = useState("idle"); // 'idle' | 'scaleDown' | 'scaleUp' | 'translating'
 
   const currentProject = carouselItems[virtualCenter];
-  const projectIndex = projects.findIndex((p) => p.id === currentProject.id);
+  const projectIndex = currentProject ? projects.findIndex((p) => p.id === currentProject.id) : -1;
 
   // Separate state for close button to prevent re-renders affecting it
   const handleCloseClick = () => {
@@ -461,25 +479,41 @@ export const ProjectsModal = ({ onClose }) => {
     if (!track || track.children.length < 2) return 0;
     const a = track.children[0].getBoundingClientRect();
     const b = track.children[1].getBoundingClientRect();
-    return b.left - a.left;
+    return isMobile ? (b.top - a.top) : (b.left - a.left);
   };
 
   // Center the middle item on mount and on resize
   React.useEffect(() => {
     const recalc = () => {
+      // Don't recalculate during transitions to avoid interfering with animations
+      if (isTransitioning) return;
+
       const track = trackRef.current;
       if (!track) return;
       const centerItem = track.children[centerIndex];
       if (!centerItem) return;
       const rect = centerItem.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const delta = window.innerWidth / 2 - centerX;
-      setBaseOffset(delta);
+
+      if (isMobile) {
+        const centerY = rect.top + rect.height / 2;
+        const delta = window.innerHeight / 2 - centerY;
+        setBaseOffset(delta);
+      } else {
+        const centerX = rect.left + rect.width / 2;
+        const delta = window.innerWidth / 2 - centerX;
+        setBaseOffset(delta);
+      }
     };
-    recalc();
+
+    // Delay initial calculation to let DOM settle
+    const timer = setTimeout(recalc, 100);
     window.addEventListener("resize", recalc);
-    return () => window.removeEventListener("resize", recalc);
-  }, [centerIndex, carouselItems]);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", recalc);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [centerIndex, isMobile]);
 
   // keep virtualCenter synced when carouselItems length/structure changes
   React.useEffect(() => {
@@ -624,30 +658,65 @@ export const ProjectsModal = ({ onClose }) => {
   const handleMouseDown = (e) => {
     if (isTransitioning || animStage !== "idle") return;
     setIsDragging(true);
-    setDragStart(e.clientX);
+    const position = isMobile ? e.clientY : e.clientX;
+    setDragStart(position);
     setDragOffset(0);
     lastDragTime.current = Date.now();
-    lastDragPosition.current = e.clientX;
+    lastDragPosition.current = position;
     velocityRef.current = 0;
     // immediately scale the current item down for drag feedback
     setAnimStage("scaleDown");
   };
 
+  const handleTouchStart = (e) => {
+    if (!isMobile || isTransitioning || animStage !== "idle") return;
+    setIsDragging(true);
+    const position = e.touches[0].clientY;
+    setDragStart(position);
+    setDragOffset(0);
+    lastDragTime.current = Date.now();
+    lastDragPosition.current = position;
+    velocityRef.current = 0;
+    setAnimStage("scaleDown");
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isMobile || !isDragging || dragStart === null) return;
+    const position = e.touches[0].clientY;
+    const diff = position - dragStart;
+    setDragOffset(diff);
+
+    const now = Date.now();
+    const timeDelta = now - lastDragTime.current;
+    if (timeDelta > 0 && lastDragPosition.current !== null) {
+      const positionDelta = position - lastDragPosition.current;
+      velocityRef.current = positionDelta / timeDelta;
+    }
+    lastDragTime.current = now;
+    lastDragPosition.current = position;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile) return;
+    handleMouseUp();
+  };
+
   const handleMouseMove = useCallback((e) => {
     if (!isDragging || dragStart === null) return;
-    const diff = e.clientX - dragStart;
+    const position = isMobile ? e.clientY : e.clientX;
+    const diff = position - dragStart;
     setDragOffset(diff);
 
     // Calculate velocity for momentum
     const now = Date.now();
     const timeDelta = now - lastDragTime.current;
     if (timeDelta > 0 && lastDragPosition.current !== null) {
-      const positionDelta = e.clientX - lastDragPosition.current;
+      const positionDelta = position - lastDragPosition.current;
       velocityRef.current = positionDelta / timeDelta; // pixels per millisecond
     }
     lastDragTime.current = now;
-    lastDragPosition.current = e.clientX;
-  }, [isDragging, dragStart]);
+    lastDragPosition.current = position;
+  }, [isDragging, dragStart, isMobile]);
 
   const handleMouseUp = useCallback(() => {
     if (!isDragging) return;
@@ -787,6 +856,15 @@ export const ProjectsModal = ({ onClose }) => {
 
   const containerRefForScroll = useRef(null);
 
+  // Show loading if projects haven't loaded yet
+  if (!projectsData || carouselItems.length === 0) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div className="text-white text-xl">Loading projects...</div>
+      </div>
+    );
+  }
+
   // Show project detail page if selected
   if (showProjectDetail && selectedProject) {
     return (
@@ -834,15 +912,20 @@ export const ProjectsModal = ({ onClose }) => {
           ref={containerRef}
           className="flex-1 flex items-center justify-center cursor-grab active:cursor-grabbing select-none relative w-full"
           onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Carousel track */}
           <div
             ref={trackRef}
-            className="flex items-center gap-4"
+            className={isMobile ? "flex flex-col items-center gap-4" : "flex items-center gap-4"}
             style={{
               transition: isTransitioning ? "transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)" : "none",
-              transform: `translateX(${baseOffset + translateX + dragOffset}px)`,
+              transform: isMobile
+                ? `translateY(${baseOffset + translateX + dragOffset}px)`
+                : `translateX(${baseOffset + translateX + dragOffset}px)`,
             }}
           >
             {carouselItems.map((item, idx) => {
@@ -887,8 +970,8 @@ export const ProjectsModal = ({ onClose }) => {
                     }
                   }}
                   style={{
-                    width: "45vw",
-                    height: "50vh",
+                    width: isMobile ? "80vw" : "45vw",
+                    height: isMobile ? "40vh" : "50vh",
                     // Only apply transform if NOT animating on entrance, to avoid conflicts with animation
                     transform: isCarouselEntering
                       ? "none"
@@ -959,7 +1042,8 @@ export const ProjectsModal = ({ onClose }) => {
 
         {/* Footer removed per user request - keeps modal cleaner */}
 
-        {/* Bottom navigation with connected arrows */}
+        {/* Bottom navigation with connected arrows - desktop only */}
+        {!isMobile && (
         <div
           className="fixed bottom-0 left-0 right-0 z-40 flex flex-col items-center justify-center bg-gradient-to-t from-black/80 to-transparent"
           style={{ height: "15%" }}
@@ -984,13 +1068,17 @@ export const ProjectsModal = ({ onClose }) => {
               alt="navigation arrows"
               className="cursor-pointer"
               style={{
-                width: "10vw",
-                height: "5vw",
+                width: isMobile ? "5vw" : "10vw",
+                height: isMobile ? "10vw" : "5vw",
                 filter: isHoveringArrows ? 'invert(1) brightness(1.2)' : 'invert(1) brightness(0.8)',
-                transform: isHoveringArrows ? 'scale(1.1)' : 'scale(1)',
+                transform: isMobile
+                  ? isHoveringArrows ? 'rotate(90deg) scale(1.1)' : 'rotate(90deg) scale(1)'
+                  : isHoveringArrows ? 'scale(1.1)' : 'scale(1)',
                 transition: 'all 0.2s ease-out, clip-path 0.2s ease-out',
                 zIndex: 60,
-                clipPath: isHoveringArrows === 'right' ? 'inset(0 0 0 50%)' : isHoveringArrows === 'left' ? 'inset(0 50% 0 0)' : 'inset(0)',
+                clipPath: isMobile
+                  ? (isHoveringArrows === 'right' ? 'inset(0 0 50% 0)' : isHoveringArrows === 'left' ? 'inset(50% 0 0 0)' : 'inset(0)')
+                  : (isHoveringArrows === 'right' ? 'inset(0 0 0 50%)' : isHoveringArrows === 'left' ? 'inset(0 50% 0 0)' : 'inset(0)'),
               }}
             />
 
@@ -1004,7 +1092,14 @@ export const ProjectsModal = ({ onClose }) => {
               }}
               onMouseEnter={() => setIsHoveringArrows('left')}
               onMouseLeave={() => setIsHoveringArrows('both')}
-              style={{
+              style={isMobile ? {
+                left: 0,
+                right: 0,
+                top: 0,
+                height: "50%",
+                zIndex: 70,
+                background: "transparent",
+              } : {
                 left: 0,
                 top: 0,
                 bottom: 0,
@@ -1022,7 +1117,14 @@ export const ProjectsModal = ({ onClose }) => {
               }}
               onMouseEnter={() => setIsHoveringArrows('right')}
               onMouseLeave={() => setIsHoveringArrows('both')}
-              style={{
+              style={isMobile ? {
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: "50%",
+                zIndex: 70,
+                background: "transparent",
+              } : {
                 right: 0,
                 top: 0,
                 bottom: 0,
@@ -1040,6 +1142,7 @@ export const ProjectsModal = ({ onClose }) => {
             </p>
           </div>
         </div>
+        )}
       </div>
     </>
   );

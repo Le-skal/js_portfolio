@@ -1,0 +1,131 @@
+{
+  "profile": {
+    "headline": "Data Analyst Apprentice and future Data Engineer, I transform data complexity into concrete, impactful solutions.",
+    "about": {
+      "nationality": "French",
+      "location": "Paris",
+      "background": "My international background, from Hong Kong to the Netherlands and then Paris, has forged my ability to adapt and innovate in varied and demanding environments."
+    }
+  },
+  
+  "mon_histoire": {
+    "introduction": "Hi! I'm Skal, I'm 21, and I'm a Data Analyst Apprentice at L'AGEFI. But beyond lines of code and dashboards, I'm someone who has crossed the globe to find my path.",
+    
+    "chapters": [
+      {
+        "title": "The Early Years: Hong Kong",
+        "content": "My story starts far from Paris. I grew up in Hong Kong, a city where East meets West, where skyscrapers rub shoulders with traditional temples. This international childhood taught me early on to navigate between cultures, to adapt, and to be curious about the world around me. Perhaps that's where my taste for solving complex problems began: when you grow up between several worlds, you learn to connect the dots differently."
+      },
+      {
+        "title": "The Dutch Adventure: Discovering AI",
+        "content": "After high school, I wanted to discover something else. I headed to the Netherlands, to the University of Groningen, to study Computer Science and Artificial Intelligence. That's where it all started for me. Theoretical classes on machine learning, algorithms, the way data can tell stories... I was fascinated. But something was missing. The highly academic approach didn't allow me to get my hands dirty enough, to create concrete things. I wanted to see the direct impact of my work."
+      },
+      {
+        "title": "Paris and ECE: The Turning Point",
+        "content": "I then made a decision that changed my trajectory: joining ECE Paris for a more applied and collaborative program. And that was the revelation. Team projects, real cases, the possibility of developing applications that truly serve a purpose. I discovered that it wasn't just coding that interested me, but solving concrete problems with technology. Creating tools that people actually use, that make their lives easier."
+      },
+      {
+        "title": "L'AGEFI: Tech Serving Information",
+        "content": "My apprenticeship at L'AGEFI has been a fantastic school. Imagine: a leading financial media outlet, expert journalists, and me, a young developer, having to understand their needs and create tools to automate their processes. I learned to speak 'business', to understand that a good technical tool is worthless if it doesn't answer a real need. I automate newsletters, create analytics dashboards, develop document analysis systems... Every day, I see the impact of my work. And that is thrilling."
+      },
+      {
+        "title": "Beyond Code",
+        "content": "You know, I'm not just a developer locked behind his screen. I love guitar, climbing, cycling. I love hanging out in Parisian cafes with my friends, playing pétanque. I am a very sociable person, and that's important to me. Because tech is above all humans collaborating. I also have a humanitarian commitment close to my heart, notably with the NGO MAYAA which works in Nepal. Ethics is not just a word for me, it's a value I apply daily."
+      },
+      {
+        "title": "What Drives Me",
+        "content": "What drives me? Building robust data infrastructures that have a real impact. I don't want to do tech just for tech's sake. I want to work for companies that innovate, that move things forward, that have a positive impact on society. My international background taught me one thing: the best projects are born when you mix perspectives, when you work as a team, when you remain curious and humble. I am here to learn, to grow, and to contribute to something bigger than myself."
+      },
+      {
+        "title": "Today",
+        "content": "Today, I am currently applying for Masters in Data Engineering. I am working on exciting projects: trading simulators with ML, public health data analyses, automation systems for L'AGEFI. Every project is an opportunity to learn, to challenge myself. And honestly? I love it. I know where I want to go: become a Data Engineer, then Senior, and why not Head of Data one day. But I also know the journey is as important as the destination."
+      }
+    ],
+    
+    "conclusion": "So, that was my story. Not just a CV, but a journey, choices, lessons learned. If you are looking for someone rigorous but creative, technical but human, who knows how to work in a team and has the ambition to move the needle, then let's talk! Don't hesitate to contact me, whether for a project, an opportunity, or simply to chat over coffee."
+  },
+  
+  "parcours": {
+    "summary": "Discovery of technology and data sciences through studies in Computer Science and Artificial Intelligence in the Netherlands, before joining ECE Paris for a more applied and collaborative program."
+  },
+  
+  "experiences_cles": [
+    {
+      "title": "Data & AI Developer Apprentice - L'AGEFI",
+      "period": "2023 - Present",
+      "description": "Within the digital team of a leading financial media outlet",
+      "achievements": [
+        "Editorial process automation: Designed an automatic newsletter generation system using n8n and APIs, reducing daily content preparation time by 70%",
+        "Development of analytical dashboards: Created Piano Analytics dashboards connected to BigQuery to track real-time editorial performance, used daily by 15+ journalists",
+        "Development of RAG tools for journalists: Implemented an intelligent financial document querying solution, speeding up information retrieval by 50%",
+        "Financial data pipelines: Built Python ETL workflows for automated financial article analysis and business insight extraction"
+      ]
+    },
+    {
+      "title": "Developer - Junior Entreprise ECE",
+      "period": "2022 - 2023",
+      "description": "Client missions within the Junior Enterprise",
+      "achievements": [
+        "Development of a Python ETL pipeline for a client, automating a manual data consolidation process and eliminating 100% of input errors",
+        "Creation of a media monitoring application using n8n for automatic collection and aggregation of information sources"
+      ]
+    },
+    {
+      "title": "Academic & Personal Projects",
+      "period": "2021 - Present",
+      "description": "Development of innovative data and web applications",
+      "achievements": [
+        "Data visualization web application (R/Shiny): Designed a public health data analysis tool reducing trend analysis time by 30%",
+        "ML Trading Simulator: Developed a platform combining machine learning and sentiment analysis on French financial news, with backtesting on historical data",
+        "Cancer research investment analysis: Comparative study between global research investments and cancer mortality rates (WHO, PubMed, clinical trials data), handling multiple datasets and creating analysis ratios",
+        "Varied development projects: Games (Snake, simulators), web apps, and programming challenges in Python, Java, C/C++"
+      ]
+    }
+  ],
+  
+  "adn": {
+    "title": "At the Crossroads of Technology and Humanity",
+    "ambition": "My ambition is to build robust data infrastructures (Data Engineering) that directly serve strategic decision-making.",
+    "competences": [
+      {
+        "name": "Technical Expertise",
+        "description": "Operational mastery of programming languages (Python, SQL, Java, C/C++, JavaScript, R, PHP) and development tools to design and build reliable, scalable solutions. Experience with cloud platforms (AWS, Google Cloud) and orchestration tools (n8n)."
+      },
+      {
+        "name": "Business & User Sense",
+        "description": "Ability to understand business stakes to prioritize developments. Sensitivity to ergonomics (UI/UX) and user testing to ensure adoption of the tools I create."
+      },
+      {
+        "name": "Pedagogy & Collaboration",
+        "description": "Aptitude for training and supporting teams on new tools, and working in synergy with data scientists and business analysts to create a virtuous value loop."
+      }
+    ]
+  },
+  
+  "approche_valeurs": {
+    "working_style": "Analytical and structured, I make a point of combining technical rigor with curiosity and ingenuity. I love teamwork and tackling challenges as a group in a cooperative and benevolent environment.",
+    "values": "Very sociable and communicative, ethics is an essential value in work as in my personal life."
+  },
+  
+  "aspirations": {
+    "immediate": "To become a Data Engineer, within an inspiring, highly innovative company that drives progress for society.",
+    "five_years": "My ambition is to evolve into a Senior Data Engineer role, where I can design technical architectures and mentor juniors, capitalizing on my dual appetite for complex problem solving and teamwork.",
+    "ten_years": "I wish to have a strategic impact, either as a Principal Data Engineer to be the technical reference on large-scale challenges, or by evolving towards a Head of Data role to steer an organization's data strategy."
+  },
+  
+  "personal": {
+    "hobbies": [
+      "Guitar",
+      "Climbing",
+      "Cycling",
+      "Pétanque",
+      "Parisian cafes with friends"
+    ],
+    "inspiration": [
+      "Creativity through music",
+      "Social connections",
+      "Humanitarian aid"
+    ],
+    "engagement": "Involved with NGO MAYAA (organization focused on Nepal)"
+  }
+}

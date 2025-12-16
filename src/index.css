@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Taken by Vultures';
+  src: url('/fonts/TakenByVultures.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @theme {
   --color-border: hsl(var(--border));
   --color-background: hsl(var(--background));
@@ -30,6 +37,10 @@
   --animate-image-fade-in: image-fade-in 0.4s ease-out 0.2s forwards;
   --animate-title-slide: title-slide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   --animate-info-slide: info-slide 0.5s ease-out 0.1s forwards;
+  --animate-gradient-shift: gradient-shift 8s ease-in-out infinite;
+  --animate-dropdown-open: dropdown-open 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  --animate-dropdown-item-fade: dropdown-item-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-indicator-slide: indicator-slide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 
   @keyframes float {
     0%,
@@ -322,6 +333,44 @@
       opacity: 1;
       transform: translateY(0);
       filter: blur(0);
+    }
+  }
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  @keyframes dropdown-open {
+    0% {
+      opacity: 0;
+      transform: scale(0.95) translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  @keyframes dropdown-item-fade {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes indicator-slide {
+    0% {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleY(1);
+      opacity: 1;
     }
   }
 }
