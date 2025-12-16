@@ -27,7 +27,7 @@ export const HeroSection = ({ onOpenWindow }) => {
     {
       title: t("hero.cv"),
       icon: <IconFileText className="h-full w-full text-foreground/80" />,
-      href: language === 'fr' ? 'https://raw.githubusercontent.com/Le-skal/Porfolio/main/docs/CV_FR.pdf' : 'https://raw.githubusercontent.com/Le-skal/Porfolio/main/docs/CV_EN.pdf',
+      href: language === 'fr' ? 'https://raw.githubusercontent.com/Le-skal/js_portfolio/main/docs/CV_FR.pdf' : 'https://raw.githubusercontent.com/Le-skal/Porfolio/main/docs/CV_EN.pdf',
     },
     {
       title: "GitHub",
