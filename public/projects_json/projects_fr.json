@@ -257,6 +257,185 @@
                 "MLOps: Intégrer des pratiques CI/CD et de surveillance pour automatiser le déploiement et la gestion du cycle de vie du modèle."
             ],
             "conclusion": "Le projet \"Analyse du Jeu de Données sur le Vin\" démontre la capacité à concevoir, développer et évaluer une pipeline ML complète et de haute qualité. Il va au-delà des exigences standards, offrant des insights précieux sur les données du vin et constituant un atout solide pour un portfolio de Data Scientist."
+        },
+        "PublicTradeBot": {
+            "title": "Trade Bot",
+            "description": "Système de trading automatisé exploitant le ML et l'analyse de sentiment financier.",
+            "metadata": {
+                "role": "Data Scientist",
+                "category": "Développement Web, Implémentation ML",
+                "timeline": "Développement initial rapide (Décembre 2025), en cours d'évolution",
+                "liveUrl": "https://tradebotskals.netlify.app",
+                "githubUrl": "https://github.com/Le-skal/PublicTradeBot"
+            },
+            "overview": "PublicTradeBot est un système de trading automatisé intelligent utilisant le ML et l'analyse de sentiment pour naviguer les marchés financiers. Il scrute plus de 250 articles quotidiens pour générer des signaux d'achat/vente pour cryptos et actions françaises, avec exécution autonome et suivi transparent via Google Sheets.",
+            "challenge": {
+                "problem": "Le trading traditionnel est lent, émotionnel, et limité par l'analyse humaine de vastes données. Les bots existants manquent souvent de sophistication pour l'analyse de sentiment spécifique au français ou sont trop coûteux et complexes.",
+                "goal": "L'objectif était de créer un bot IA entièrement automatisé capable de collecter et analyser des actualités financières françaises. Il doit générer des signaux ML fiables, exécuter des trades avec gestion des risques, et offrir un suivi transparent sans infrastructure de base de données complexe.",
+                "constraints": "Les contraintes incluent l'analyse quotidienne de données en temps quasi réel et l'analyse de sentiment en français avec des modèles NLP adaptés. Le bot doit être fiable, autonome, intégrer la gestion des risques et utiliser une infrastructure simple comme Google Sheets pour la persistance des données, avec gestion sécurisée des secrets."
+            },
+            "discovery": {
+                "requirements": "Le projet exigeait une compréhension complète de la chaîne de valeur du trading automatisé, de la récupération des données à l'exécution et au suivi. L'automatisation totale et l'intégration de l'IA pour des signaux robustes étaient des exigences clés.",
+                "competitiveAnalysis": "Contrairement aux plateformes coûteuses ou aux bots génériques, PublicTradeBot est une solution accessible et sur mesure. Il se différencie par son analyse de sentiment ciblée sur la presse française (CamemBERT) et son architecture légère utilisant Google Sheets.",
+                "technicalResearch": "Python a été choisi pour son écosystème ML, GitHub Actions pour l'orchestration serverless quotidienne. Google Sheets API a été retenu pour la persistance de données simple. CamemBERT a été sélectionné pour l'analyse de sentiment en français, et XGBoost pour la prédiction de signaux."
+            },
+            "architecture": {
+                "informationArchitecture": "L'architecture se compose de deux pipelines principaux: un pipeline de production quotidien (`8_daily_runner.py`) orchestré par GitHub Actions pour la collecte, prédiction et exécution des trades. Un pipeline de formation séparé permet la construction et l'itération du modèle ML via des scripts séquentiels, de la collecte de données historiques au backtesting.",
+                "technicalDecisions": "Les décisions techniques clés incluent Python 3.9+ et la modularité des fichiers pour la maintenabilité. XGBoost a été choisi pour la prédiction de signaux et CamemBERT pour l'analyse de sentiment en français. GitHub Actions assure l'orchestration quotidienne fiable, tandis que Google Sheets sert de dépôt de données léger et auditables. Vercel a été sélectionné pour un tableau de bord public simple."
+            },
+            "developmentProcess": {
+                "phase1": "La phase 1 a établi les fondations avec l'initialisation du dépôt GitHub et la configuration de l'environnement Python. Le `google_sheets_client.py` a été développé pour la communication avec Google Sheets, et les premières GitHub Actions ont été mises en place pour l'automatisation.",
+                "phase2": "La phase 2 a construit le cœur intelligent, implémentant la collecte de données (historiques et quotidiennes) et l'analyse de sentiment avec CamemBERT. Les indicateurs techniques et l'ingénierie des caractéristiques ont été développés pour entraîner le modèle XGBoost. La logique de stratégie et de gestion des risques a été intégrée au `daily_runner.py`.",
+                "phase3": "La phase 3 s'est concentrée sur l'affinement et l'optimisation, avec un backtesting approfondi pour ajuster les paramètres du modèle et les seuils. La sécurité a été renforcée via GitHub Secrets, et les performances des scripts quotidiens optimisées. Le tableau de bord Vercel a été préparé pour la visualisation des résultats."
+            },
+            "keyFeatures": [
+                {
+                    "title": "Système d'Analyse de Sentiment Financier Avancé",
+                    "description": "Traite quotidiennement plus de 250 articles de L'Agefi pour extraire le sentiment du marché pour 10 actifs cibles.",
+                    "implementation": "Le script `3_sentiment_analysis.py` utilise CamemBERT, un modèle Transformer pré-entraîné pour le français, afin d'attribuer des scores de sentiment. Ces scores sont agrégés pour générer des indicateurs globaux pour chaque actif.",
+                    "challenges": "Assurer la précision de l'analyse de sentiment financier pour le français, surmonté grâce à CamemBERT pour une compréhension contextuelle supérieure."
+                },
+                {
+                    "title": "Génération de Signaux de Trading par Machine Learning (XGBoost)",
+                    "description": "Génère des signaux d'achat/vente sélectifs pour cryptomonnaies et actions françaises basés sur divers facteurs.",
+                    "implementation": "Le modèle XGBoost (`models/trading_model.pkl`), entraîné via `6_train_model.py`, utilise des caractéristiques d'analyse de sentiment, d'indicateurs techniques et de mots-clés. Seuls les signaux avec une confiance > 0.520 sont considérés pour exécution.",
+                    "challenges": "Création de caractéristiques pertinentes à partir de sources hétérogènes et prévention du surapprentissage, résolus par un feature engineering et backtesting rigoureux."
+                },
+                {
+                    "title": "Exécution Automatisée des Trades et Gestion des Risques",
+                    "description": "Exécute automatiquement les trades identifiés par le modèle ML et applique des règles strictes de gestion des risques.",
+                    "implementation": "Le `8_daily_runner.py`, déclenché par GitHub Actions, initie les trades avec une taille de position de 25%, 3 positions max, stop loss de -8% et take profit de +20%. Une intégration avec une API de courtier est essentielle.",
+                    "challenges": "Assurer la cohérence et l'atomicité de l'exécution des ordres ainsi que le respect du plan de gestion des risques via une surveillance en temps réel."
+                },
+                {
+                    "title": "Intégration Simplifiée avec Google Sheets",
+                    "description": "Stocke toutes les données opérationnelles du bot (historique des trades, performances, articles) dans Google Sheets, servant de base de données légère.",
+                    "implementation": "Le module `google_sheets_client.py` gère l'authentification et l'interaction avec l'API Google Sheets. Il permet au bot de lire et écrire des données structurées dans différentes feuilles sans infrastructure de base de données complexe.",
+                    "challenges": "Gérer les quotas d'API, structurer les données pour l'analyse et garantir une journalisation fiable sans la robustesse d'une base de données relationnelle."
+                },
+                {
+                    "title": "Pipeline de Formation et de Backtesting Robuste",
+                    "description": "Fournit un cadre complet pour la collecte de données historiques, le traitement, l'entraînement du modèle ML et la validation de la stratégie.",
+                    "implementation": "Le pipeline utilise des scripts séquentiels : `fetch_all_data.py`, `sentiment_analysis.py`, `technical_indicators.py`, `feature_engineering.py`, `train_model.py` (XGBoost) et `backtest.py` pour simuler la stratégie.",
+                    "challenges": "Assurer la cohérence des données et caractéristiques entre phases d'entraînement/production, et créer un environnement de backtesting précis pour évaluer la rentabilité."
+                }
+            ],
+            "testing": "Le processus de test a principalement reposé sur un backtesting exhaustif de la stratégie, réalisé sur les données 2024-2025. Cette phase critique a permis d'évaluer la performance historique, d'identifier forces et faiblesses, et d'affiner les paramètres clés comme le seuil de confiance et les règles de gestion des risques. Le backtesting intensif a servi de mécanisme d'assurance qualité pour la logique de trading, permettant des ajustements itératifs du modèle et de la stratégie.",
+            "results": {
+                "technicalAchievements": "Le projet a réussi le déploiement d'un système MLOps entièrement automatisé, intégrant XGBoost et CamemBERT dans une pipeline de production quotidienne. L'orchestration fiable via GitHub Actions et la persistance des données via Google Sheets ont été mises en œuvre. Une logique robuste de gestion des risques a été développée et intégrée à l'exécution des trades.",
+                "businessImpact": "Le projet démontre le potentiel de l'IA et de l'automatisation pour le trading, réduisant significativement le temps d'analyse et de décision. Il offre une base transparente pour le suivi des performances, essentielle à l'amélioration continue, et un potentiel d'évolutivité pour de futurs actifs et stratégies.",
+                "personalGrowth": "J'ai acquis une expertise approfondie en conception et déploiement de pipelines MLOps et maîtrisé le traitement de données financières avec l'ingénierie des caractéristiques et les modèles prédictifs. J'ai aussi développé des compétences en automatisation cloud, intégration d'API et une meilleure compréhension des stratégies de trading et gestion des risques."
+            },
+            "techStack": {
+                "frontend": "Vercel (pour tableau de bord public)",
+                "backend": "Python, GitHub Actions, Google Sheets API, RSS",
+                "tools": ".env / GitHub Secrets, `requirements.txt`",
+                "libraries": "XGBoost (prédiction), CamemBERT (NLP français), Bibliothèques d'indicateurs techniques"
+            },
+            "learnings": [
+                "Comprendre la synergie entre l'analyse de sentiment NLP (CamemBERT) et les modèles prédictifs ML (XGBoost) pour des signaux de trading nuancés sur des marchés spécifiques.",
+                "Apprendre les défis et meilleures pratiques du déploiement de modèles ML en production via des pipelines MLOps automatisés (GitHub Actions) et le suivi des performances.",
+                "Explorer l'utilisation créative de Google Sheets comme base de données légère et efficace pour des projets, démontrant une flexibilité architecturale.",
+                "Saisir l'importance fondamentale de définir des règles claires de gestion des risques et de valider la stratégie par un backtesting rigoureux avant toute exécution réelle."
+            ],
+            "futureEnhancements": [
+                "Étendre l'univers de trading en ajoutant plus de cryptomonnaies, actions internationales, ETF ou autres classes d'actifs pour diversifier le portefeuille.",
+                "Intégrer davantage de sources de données, telles que les réseaux sociaux (Twitter/X) pour l'analyse de sentiment en temps réel ou des données macroéconomiques pertinentes.",
+                "Expérimenter des modèles ML plus avancés comme des architectures de Deep Learning (LSTMs, Transformers) pour améliorer les prédictions ou l'analyse de sentiment.",
+                "Implémenter des notifications en temps réel via Slack, Telegram ou e-mail pour alerter sur les exécutions de trades, opportunités manquées ou changements de sentiment.",
+                "Développer un tableau de bord Vercel plus riche avec des visualisations interactives, des filtres et une analyse approfondie des performances du bot."
+            ],
+            "conclusion": "PublicTradeBot est une réalisation significative appliquant l'IA et l'automatisation aux marchés financiers, démontrant une pipeline MLOps complète capable de collecter, analyser et agir sur des données complexes en temps réel. En combinant l'analyse de sentiment multilingue, des modèles prédictifs robustes et une automatisation sans faille, il jette les bases d'un système de trading intelligent. Ce projet prouve la puissance de la Data Science pour transformer des défis réels en solutions innovantes, offrant un cadre évolutif pour la FinTech."
+        },
+        "SnakeBot": {
+            "title": "Snake Bot",
+            "description": "Une IA sophistiquée utilisant le Deep Reinforcement Learning pour maîtriser le jeu classique du Snake.",
+            "metadata": {
+                "role": "Data Scientist",
+                "category": "Apprentissage par Renforcement, IA de Jeu",
+                "timeline": "4 jours (12 - 16 déc. 2025)",
+                "liveUrl": null,
+                "githubUrl": "https://github.com/Le-skal/SnakeBot"
+            },
+            "overview": "SnakeBot explore l'apprentissage par renforcement pour créer une IA maîtrisant le jeu classique du Snake. L'agent utilise un Deep Q-Network (DQN) Dueling et une représentation d'état innovante pour développer une stratégie avancée et atteindre des scores élevés. Le projet intègre la modélisation spatiale, l'ingénierie des récompenses et des algorithmes classiques comme le cycle de Hamilton.",
+            "challenge": {
+                "problem": "Le jeu Snake, simple en apparence, exige une planification à long terme pour éviter les pièges et les collisions avec le corps et les murs. Les approches basées sur des règles simples sont souvent sous-optimales face à la complexité et à la nature dynamique de l'environnement.",
+                "goal": "Développer une IA capable non seulement de survivre efficacement, mais aussi d'atteindre des scores élevés de manière constante en adoptant une stratégie intelligente. Cela impliquait d'apprendre à éviter les obstacles, à atteindre la nourriture, à développer une conscience spatiale et à intégrer une planification à long terme.",
+                "constraints": "L'implémentation devait être légère et optimisée pour du matériel modeste. L'agent devait recevoir suffisamment d'informations sans surcharge, et le développement devait être rapide, tout en équilibrant l'exploration et l'exploitation des stratégies."
+            },
+            "discovery": {
+                "requirements": "Le projet nécessitait un environnement de jeu Snake robuste, un agent capable d'apprendre de ses interactions et un cadre d'entraînement. L'accent a été mis sur la création d'un agent capable de stratégies avancées pour dicter le choix de l'apprentissage par renforcement.",
+                "competitiveAnalysis": "L'approche de SnakeBot visait à surpasser les IA basées sur des règles simples et à améliorer les implémentations RL standard. Ceci a été réalisé via une représentation d'état enrichie, une ingénierie des récompenses ciblée, et l'intégration d'algorithmes classiques comme le cycle de Hamilton.",
+                "technicalResearch": "La recherche a porté sur les Deep Q-Networks (DQN) comme base, l'architecture Dueling DQN pour l'efficacité, et diverses représentations d'état pour modéliser l'environnement. L'ingénierie des récompenses a été explorée pour encourager des comportements stratégiques, et le cycle de Hamilton étudié pour la planification à long terme."
+            },
+            "architecture": {
+                "informationArchitecture": "Le projet est organisé en modules clairs: `game/` pour la logique du jeu, `training/` pour l'agent IA et l'entraînement, et `algorithms/` pour les algorithmes auxiliaires. Cette séparation assure une maintenabilité optimale et une meilleure compréhension du flux de données.",
+                "technicalDecisions": "PyTorch a été choisi pour sa flexibilité et ses performances. L'architecture Dueling DQN a été adoptée pour stabiliser l'apprentissage. Une représentation d'état enrichie de 119 caractéristiques fournit une conscience spatiale complète et stratégique. La structure de récompense stratégique cible la préservation de l'espace, et le cycle de Hamilton est intégré comme guide stratégique."
+            },
+            "developmentProcess": {
+                "phase1": "Mise en place de l'environnement de jeu `SnakeEnv` gérant la logique de base du Snake. Définition de la structure initiale du module `training/` et de l'agent `DQN` minimal, ainsi que du script `main.py`.",
+                "phase2": "Implémentation de la représentation d'état avancée (119 caractéristiques) et de la nouvelle structure de récompense axée sur l'espace. Développement de l'algorithme du cycle de Hamilton et son intégration. Amélioration de l'agent `DQN` avec l'architecture Dueling et création de l'interface d'entraînement interactive.",
+                "phase3": "Affinement des hyperparamètres de l'agent DQN et optimisation de l'architecture CNN pour le matériel modeste. Tests et débogage des comportements de l'agent via les modes d'entraînement visuels et rapides. Amélioration de l'expérience utilisateur de l'interface CLI."
+            },
+            "keyFeatures": [
+                {
+                    "title": "Agent DQN avec Architecture Dueling",
+                    "description": "L'agent IA utilise un réseau de neurones profonds pour apprendre une politique optimale. L'architecture Dueling DQN améliore l'estimation des valeurs Q en séparant la valeur d'un état de l'avantage de chaque action, rendant l'apprentissage plus stable et efficace.",
+                    "implementation": "Implémenté en PyTorch (`training/snake_ai.py`), la classe `DQN` définit deux flux de sortie (Value et Advantage) qui sont combinés pour produire les valeurs Q. L'entraînement utilise `torch.optim.Adam` avec une fonction de perte MSE.",
+                    "challenges": "Concevoir une architecture CNN légère adaptée à la représentation d'état spatiale. L'intégration de la logique Dueling et l'optimisation des hyperparamètres étaient essentielles pour des performances stables."
+                },
+                {
+                    "title": "Représentation d'État Avancée",
+                    "description": "Fournit à l'IA une vue holistique et stratégique de l'environnement, au-delà des informations locales. Cela inclut les dangers immédiats, la direction de la nourriture, une conscience spatiale complète de la grille et des indicateurs liés au cycle de Hamilton.",
+                    "implementation": "Le vecteur d'état de 119 caractéristiques est calculé dans `game/environment.py`. Il agrège des données binaires, one-hot, normalisées et des informations spécifiques au cycle de Hamilton.",
+                    "challenges": "Déterminer les informations les plus pertinentes pour l'IA et comment les normaliser ou les encoder efficacement afin de maximiser l'apprentissage sans introduire de redondances excessives ou de bruit."
+                },
+                {
+                    "title": "Structure de Récompense Stratégique",
+                    "description": "Modifie le comportement de l'IA en récompensant la préservation de l'espace vital plutôt que la simple poursuite de la nourriture. Cela encourage le serpent à adopter des stratégies évitant de se piéger, favorisant la survie à long terme et les scores élevés.",
+                    "implementation": "Dans `game/environment.py`, après chaque mouvement, l'algorithme calcule le `new_accessible_space`. Une pénalité est appliquée si `space_reduction > 0`, et une petite récompense si `space_reduction < 0`, avec des valeurs calibrées.",
+                    "challenges": "Trouver les coefficients de pénalité/récompense (ex: `0.5`, `0.2`) qui incitent le serpent à des comportements désirables sans le rendre trop conservateur ou, à l'inverse, incapable de progresser."
+                },
+                {
+                    "title": "Intégration du Cycle de Hamilton",
+                    "description": "Fournit à l'IA des informations sur un chemin optimal pour parcourir toutes les cellules du plateau sans se croiser. Ceci est crucial pour les très longs serpents afin d'éviter les situations de blocage et assurer une stratégie de survie à long terme.",
+                    "implementation": "Un algorithme de cycle de Hamilton est implémenté dans `algorithms/hamilton_cycle.py`. Sa direction est encodée dans le vecteur d'état (4 bits pour la direction, 1 bit pour `should_follow`).",
+                    "challenges": "Combiner un algorithme classique déterministe avec une approche d'apprentissage par renforcement. Le défi était de décider quand et comment l'IA devait utiliser cette information stratégique, par exemple, privilégier le cycle en cas de danger."
+                },
+                {
+                    "title": "Interface d'Entraînement Interactive",
+                    "description": "Offre une interface conviviale en ligne de commande pour configurer et lancer diverses sessions d'entraînement. Elle propose des modes 'sans tête' pour la rapidité et visuels pour la démonstration et le débogage.",
+                    "implementation": "La fonction `interactive_menu()` dans `training/train.py` utilise des `print()` pour afficher les options et `input()` pour recueillir le choix de l'utilisateur, puis lance la routine d'entraînement correspondante.",
+                    "challenges": "Concevoir une interface utilisateur claire et intuitive malgré l'absence d'interface graphique. Il fallait s'assurer que les utilisateurs puissent facilement comprendre les options et l'impact de leurs choix sur le processus d'entraînement."
+                }
+            ],
+            "testing": "Le processus de développement a été fortement itératif, soutenu par des tests rapides pour ajuster les hyperparamètres et un entraînement visuel crucial pour le débogage. L'entraînement sans tête a permis d'évaluer les performances à grande échelle sur des milliers d'épisodes. L'ingénierie des récompenses a été affinée itérativement pour encourager les comportements souhaités.",
+            "results": {
+                "technicalAchievements": "Développement d'un agent d'IA sophistiqué pour Snake avec un DQN Dueling et une représentation d'état riche. Intégration réussie du cycle de Hamilton pour améliorer la planification à long terme. Création d'un environnement d'entraînement flexible et configurable, optimisé pour la performance et l'analyse.",
+                "businessImpact": "Ce projet démontre une capacité avérée à concevoir et implémenter des systèmes d'apprentissage par renforcement complexes, ainsi qu'à prototyper des solutions d'IA ambitieuses dans des délais contraints.",
+                "personalGrowth": "Ce projet a renforcé mes compétences en Apprentissage par Renforcement (DQN, ingénierie des récompenses), en Deep Learning avec PyTorch, en conception d'environnements RL et en intégration d'algorithmes classiques. Il a aussi prouvé ma capacité à développer rapidement des prototypes complexes."
+            },
+            "techStack": {
+                "frontend": "",
+                "backend": "Python",
+                "tools": "",
+                "libraries": "PyTorch (framework de deep learning pour les réseaux neuronaux), NumPy (opérations numériques et manipulation des vecteurs d'état), collections.deque (pour le tampon de relecture), random (pour l'exploration epsilon-greedy)"
+            },
+            "learnings": [
+                "La représentation d'état est capitale: une présentation riche et pertinente de l'environnement accélère l'apprentissage et améliore la qualité de la politique de l'IA.",
+                "L'ingénierie des récompenses est un art délicat: les récompenses doivent guider l'agent vers des comportements intermédiaires souhaitables (ex: préserver l'espace) pour éviter les pièges et favoriser une stratégie à long terme.",
+                "Les architectures avancées de DQN, comme Dueling, stabilisent et accélèrent l'apprentissage en permettant au réseau de mieux discriminer la valeur de l'état des avantages des actions.",
+                "La synergie entre algorithmes classiques (ex: cycle de Hamilton) et l'apprentissage par renforcement peut fournir un savoir-faire précieux à l'agent, réduisant la complexité de l'apprentissage pur et guidant le comportement."
+            ],
+            "futureEnhancements": [
+                "Développer une interface web pour visualiser l'agent en action et potentiellement permettre aux utilisateurs d'interagir avec le SnakeBot.",
+                "Explorer des algorithmes d'apprentissage par renforcement plus avancés comme Prioritized Experience Replay, Rainbow DQN, ou PPO pour améliorer les performances et la stabilité.",
+                "Mettre en œuvre un cadre d'optimisation automatisée des hyperparamètres (ex: Optuna) pour trouver les meilleurs réglages pour l'entraînement de l'agent.",
+                "Permettre à l'agent de s'adapter à différentes tailles de plateaux ou à des variations des règles du jeu sans nécessiter un réentraînement complet.",
+                "Implémenter des mécanismes plus robustes pour sauvegarder les modèles entraînés et les métriques d'entraînement (TensorBoard, MLflow) pour un suivi et une analyse approfondis.",
+                "Intégrer une interface graphique (GUI) utilisant une bibliothèque comme Pygame ou Kivy pour une interaction utilisateur plus riche."
+            ],
+            "conclusion": "SnakeBot est une réalisation significative dans l'application de l'apprentissage par renforcement à un problème de jeu classique. Il démontre une maîtrise technique de PyTorch et des algorithmes de Deep Q-Networks. Ce projet met en lumière ma capacité à relever des défis complexes en IA avec une approche structurée, créative et efficace, ouvrant la voie à des applications encore plus sophistiquées dans le domaine de l'intelligence artificielle."
         }
     }
 }

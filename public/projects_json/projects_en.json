@@ -260,6 +260,184 @@
         "Implement more advanced hyperparameter tuning techniques such as GridSearchCV, RandomizedSearchCV, or Bayesian optimization."
       ],
       "conclusion": "The 'ABDD: Wine Dataset Analysis' project showcases a data scientist's comprehensive ability to implement, rigorously evaluate, deeply analyze, and compellingly visualize ML algorithms. Its commitment to production-ready code, thorough documentation, and reproducible results underscores a professional approach crucial for tackling complex data challenges."
+    },
+    "PublicTradeBot": {
+      "title": "Trade Bot",
+      "description": "AI-powered automated trading system for crypto and French stocks via ML/NLP.",
+      "metadata": {
+        "role": "Data Scientist / ML Engineer",
+        "category": "Web Development - ML Implementation, FinTech, Automated Trading",
+        "timeline": "Late 2024 - Present (Ongoing Development)",
+        "liveUrl": "https://tradebotskals.netlify.app",
+        "githubUrl": "https://github.com/Le-skal/PublicTradeBot"
+      },
+      "overview": "PublicTradeBot is an AI-powered automated trading system for cryptocurrencies and French stocks. It leverages cutting-edge ML and NLP to analyze 250+ daily L'Agefi articles, generating actionable trading signals. The project focuses on a lean, serverless architecture with GitHub Actions and Google Sheets for data storage, combining sentiment analysis with technical indicators and XGBoost for highly selective decisions.",
+      "challenge": {
+        "problem": "Individual traders struggle to process vast financial news, market data, and execute trades efficiently, often suffering from emotional biases and time commitments. Existing automated solutions are complex, expensive, or lack customization for specific markets and data sources.",
+        "goal": "Develop a fully automated, AI-driven trading system to generate high-confidence trade signals and execute them autonomously. The system needed to process diverse data, apply advanced ML, incorporate robust risk management, and provide transparent tracking with a lean, easy-to-deploy architecture.",
+        "constraints": "Reliably fetching 250+ daily L'Agefi articles and market data was crucial, requiring daily real-time processing. The XGBoost model needed strong backtested performance, and the entire system demanded serverless automation via GitHub Actions with Google Sheets for data storage. Secure API key handling was paramount."
+      },
+      "discovery": {
+        "requirements": "The project required timely data acquisition, robust analytical methods combining sentiment and technical indicators, predictive modeling, disciplined execution, and transparent performance monitoring. Key specifics included French news processing, crypto/stock support, and risk-controlled strategies.",
+        "competitiveAnalysis": "Unlike many bots relying on simple rules or technical indicators, PublicTradeBot integrates advanced NLP for French news with ML for nuanced signal generation. Its 'no-database' Google Sheets approach also offers a simpler, more accessible alternative to complex enterprise systems.",
+        "technicalResearch": "Research led to CamemBERT for French financial sentiment, XGBoost for predictive modeling, and GitHub Actions for serverless automation. Google Sheets API was chosen for lightweight data persistence, and various risk management techniques were explored for strategy implementation."
+      },
+      "architecture": {
+        "informationArchitecture": "The system features a modular, sequential pipeline separating training and production components. The daily bot uses `8_daily_runner.py` for orchestration, interacting with `google_sheets_client.py` and a pre-trained `trading_model.pkl`. The training pipeline includes scripts for data fetching, sentiment, technical indicators, feature engineering, model training, and backtesting.",
+        "technicalDecisions": "Python was chosen for its data science ecosystem and scripting ease. GitHub Actions provides free, serverless daily execution. Google Sheets offers simple, 'no-database' persistence. XGBoost was selected for efficient, accurate signal generation, while CamemBERT ensures high-quality French sentiment analysis. A modular design enhances maintainability."
+      },
+      "developmentProcess": {
+        "phase1": "This phase established the core Python environment, repository, and secure `.env` setup. Crucially, Google Sheets integration via a service account and `google_sheets_client.py` was prioritized for reliable data operations. A basic GitHub Actions workflow was prototyped for daily script execution.",
+        "phase2": "Core functional components were developed: data fetching for RSS and market prices, CamemBERT-based sentiment analysis, and technical indicator generation. These were combined into features for the XGBoost model, which was trained and saved. A backtesting script validated the strategy, and `8_daily_runner.py` integrated all production-ready logic for market fetching, prediction, and trade execution.",
+        "phase3": "Rigorous backtesting against 2024-2025 data refined strategy parameters and the ML confidence threshold. Error handling was improved, and the GitHub Actions workflow optimized for robust daily execution and logging. Security measures using GitHub Secrets were implemented, and an optional Vercel dashboard for performance visualization was planned."
+      },
+      "keyFeatures": [
+        {
+          "title": "Automated Daily Trading Pipeline",
+          "description": "The bot autonomously executes its trading strategy daily, fetching new data, generating signals, and potentially placing trades without manual intervention.",
+          "implementation": "Orchestrated by GitHub Actions, `8_daily_runner.py` runs daily at 12 PM CET, fetching L'Agefi articles and market prices. It uses the pre-trained XGBoost model for predictions, applies defined risk management, and logs all activities to Google Sheets.",
+          "challenges": "Ensuring robust error handling for external APIs, managing state, and preventing duplicate trades in a scheduled, serverless environment required careful design of logging and checking mechanisms."
+        },
+        {
+          "title": "Advanced French Sentiment Analysis",
+          "description": "Analyzes the sentiment of French financial news articles from L'Agefi to gauge market mood for specific assets.",
+          "implementation": "`3_sentiment_analysis.py` (integrated into the daily runner) uses a pre-trained CamemBERT transformer model to process raw text from RSS feeds. It extracts nuanced sentiment scores relevant to the trading universe.",
+          "challenges": "Sourcing and integrating a suitable large NLP model for French financial jargon into an automated pipeline, considering resource constraints, and ensuring efficient inference for daily operations were key."
+        },
+        {
+          "title": "Machine Learning Signal Generation (XGBoost)",
+          "description": "Generates precise trading signals by combining sentiment, technical indicators, and other features, predicting optimal trade directions.",
+          "implementation": "`6_train_model.py` trains an XGBoost classifier on historical data with features from sentiment and technical indicators. The `trading_model.pkl` is then used by the daily runner to produce a 'buy', 'sell', or 'hold' signal, only if a 0.520 confidence threshold is met.",
+          "challenges": "Balancing model complexity, interpretability, and training speed was crucial. Preventing overfitting through rigorous feature selection and hyperparameter tuning, and defining a meaningful confidence threshold for high-conviction trades, were also challenging."
+        },
+        {
+          "title": "\"No-Database\" Data Management with Google Sheets",
+          "description": "Stores all trading history, performance metrics, news articles, and operational data in Google Sheets, eliminating the need for a traditional database.",
+          "implementation": "`google_sheets_client.py` provides an API wrapper, handling authentication via a Google Service Account (GitHub Secrets). It appends new trade records, updates portfolio status, and retrieves historical data, with each sheet acting as a structured table.",
+          "challenges": "Designing an efficient Google Sheets schema for various data types, ensuring secure access via service accounts, and preventing accidental data corruption through controlled permissions and robust client-side logic were addressed."
+        },
+        {
+          "title": "Robust Risk Management & Strategy Implementation",
+          "description": "Enforces strict rules to limit potential losses and manage overall portfolio exposure, ensuring disciplined trading.",
+          "implementation": "The strategy hardcodes rules: 25% capital per trade, max 3 open positions, 8% stop-loss, 20% take-profit, and max 1 trade per day. These are integrated into the `8_daily_runner.py` execution logic and monitored via Google Sheets-tracked portfolio data.",
+          "challenges": "Dynamically integrating these rules with real-time market data and trade execution calls, ensuring correct identification and action upon stop-loss/take-profit conditions across multiple open positions, required careful implementation."
+        }
+      ],
+      "testing": "Modular unit testing for each ML pipeline component ensured correct functionality and data integrity. A dedicated `7_backtest.py` script rigorously evaluated the strategy on 2024-2025 historical data, allowing iterative refinement of the ML model and risk parameters. The full daily runner was integration tested in a simulated environment, verifying the end-to-end flow. Post-deployment, Google Sheets provided continuous performance monitoring for feedback.",
+      "results": {
+        "technicalAchievements": "Successfully implemented an end-to-end, fully automated ML-driven trading system for daily execution. Integrated advanced CamemBERT NLP for French financial news sentiment, and developed a robust data pipeline transforming diverse sources into ML-ready features. Achieved serverless, cost-effective automation via GitHub Actions, and a creative 'no-database' solution using Google Sheets. Backtested performance on 2024-2025 data yielded strong results.",
+        "businessImpact": "Provided a systematic, unbiased trading approach, mitigating human error and emotional biases. Enabled efficient and scalable market analysis by automating processing of hundreds of articles and market data daily. Offered a cost-effective solution through lean architecture and transparently logged all trades for accountability and continuous improvement.",
+        "personalGrowth": "Deepened expertise in practical ML/NLP for FinTech and gained significant experience in MLOps, including designing and deploying automated ML pipelines with serverless tech. Enhanced skills in data engineering, API integration, and fault-tolerant Python applications. Developed a strong understanding of financial market data, technical indicators, and risk management, learning innovative solutions for architectural challenges."
+      },
+      "techStack": {
+        "frontend": "Vercel (optional for dashboard)",
+        "backend": "Python, Google Sheets API",
+        "tools": "GitHub Actions, Git, GitHub, .env, GitHub Secrets",
+        "libraries": "XGBoost, CamemBERT (Hugging Face Transformers), Pandas, Requests, BeautifulSoup (implied)"
+      },
+      "learnings": [
+        "Modular ML pipeline design significantly improves maintainability, debuggability, and scalability by breaking down complex workflows into distinct scripts.",
+        "Leveraging services like Google Sheets and GitHub Actions for data storage and scheduling can drastically reduce operational overhead and development time, offering creative 'no-code' infrastructure solutions.",
+        "For specialized tasks like financial news sentiment, utilizing domain-specific or language-specific transformer models (e.g., CamemBERT for French) is vital for high accuracy and relevant insights over generic NLP models.",
+        "Regardless of prediction accuracy, a robust automated trading system *must* incorporate strict risk management rules (stop-loss, take-profit, position sizing) to protect capital and ensure long-term viability."
+      ],
+      "futureEnhancements": [
+        "Integrate more cryptocurrencies, international stocks, or other asset classes to diversify the portfolio and expand trading opportunities.",
+        "Add more financial news RSS feeds and explore web scraping for non-RSS sources to enrich the sentiment analysis with broader market coverage.",
+        "Experiment with recurrent neural networks (RNNs) or more complex transformer architectures for enhanced time-series prediction or multi-modal data analysis.",
+        "Implement dynamic position sizing or adaptive stop-loss/take-profit levels based on real-time market volatility or overall portfolio performance.",
+        "Develop a sophisticated, interactive performance dashboard using Streamlit or Plotly Dash with real-time portfolio value and detailed trade analytics."
+      ],
+      "conclusion": "PublicTradeBot exemplifies integrating advanced ML, NLP, and smart automation to solve real financial challenges. It engineered a sophisticated, lean automated trading system, transforming raw news and market data into actionable, risk-managed decisions. Leveraging Python, GitHub Actions, and Google Sheets, this project showcases deep MLOps understanding, financial modeling, and the ability to build resilient, intelligent systems for efficient financial operations."
+    },
+    "SnakeBot": {
+      "title": "Snake Bot",
+      "description": "Intelligent AI agent mastering Snake using Dueling DQN and strategic planning.",
+      "metadata": {
+        "role": "Data Scientist",
+        "category": "Reinforcement Learning - Game AI",
+        "timeline": "December 12, 2025 - December 16, 2025",
+        "liveUrl": null,
+        "githubUrl": "https://github.com/Le-skal/SnakeBot"
+      },
+      "overview": "SnakeBot is an ambitious reinforcement learning project developing an AI to master the classic Snake game. This 'Enhanced Edition' uses a PyTorch-based Dueling Deep Q-Network and a rich 119-feature state representation with Hamiltonian cycle guidance. It features flexible training modes, demonstrating advanced AI principles for robust game agents.",
+      "challenge": {
+        "problem": "Classic Snake challenges AI with self-trapping and suboptimal moves reducing long-term survival. The core problem is learning efficient food acquisition while avoiding collisions and strategic cornering. High scores demand intelligent pathfinding and space management.",
+        "goal": "The goal was to develop a robust AI that consistently achieves high scores in Snake by learning advanced, proactive strategies. This involved moving beyond reactive behaviors to incorporate spatial awareness and anticipatory planning. The aim was to demonstrate RL mastery in a dynamic environment.",
+        "constraints": "Constraints included computational efficiency, requiring a lightweight network and training. Designing a comprehensive yet manageable 119-feature state representation was crucial. Engineering an effective reward function to guide long-term survival without local optima was also a challenge, alongside managing RL's inherently long training times."
+      },
+      "discovery": {
+        "requirements": "Requirements centered on building an adaptive AI, necessitating a `SnakeEnv` for detailed game state, a `snake_ai.py` agent for decision-making, and `train.py` for learning. Different training modes (headless/visual) were needed for practical development workflows in RL.",
+        "competitiveAnalysis": "The 'Enhanced Edition' and Dueling DQN choice imply awareness of existing Snake AI solutions and RL advancements. This aimed for superior performance over basic greedy or standard DQN approaches, integrating state-of-the-art value-based RL and hybrid strategies like Hamiltonian cycles.",
+        "technicalResearch": "Research covered Deep Q-Networks, Dueling Network Architecture for stable learning, and non-greedy reward shaping for strategic play. Pathfinding algorithms like BFS and Hamiltonian Cycles were explored for state perception, alongside PyTorch best practices and Experience Replay for training stability."
+      },
+      "architecture": {
+        "informationArchitecture": "The project employed a modular architecture: `game/` for environment logic and state, `training/` for the AI agent and learning process, and `algorithms/` for classical pathfinding methods. `main.py` served as the application entry point, orchestrating components for clarity and maintainability.",
+        "technicalDecisions": "DQN, specifically Dueling DQN, was chosen for its success in game AI and improved value estimation. A comprehensive 119-feature state space, including danger sensors, grid representation, BFS, and Hamiltonian path guidance, was designed for informed decisions. A novel 'space preservation' reward structure, penalizing accessible space reduction, aimed for long-term survival. PyTorch provided flexibility for network development, while an interactive CLI enhanced training workflow."
+      },
+      "developmentProcess": {
+        "phase1": "Phase 1 established core components: `game/environment.py` defined game rules and initial state. `training/snake_ai.py` structured the basic DQN agent, neural network layers, and initial reward structure.",
+        "phase2": "Phase 2 focused on intelligence enhancement: The 'NEW REWARD STRUCTURE' for space preservation was implemented, and the state space expanded to 119 features, integrating BFS and Hamiltonian cycle guidance. `snake_ai.py` was upgraded to Dueling DQN, and `training/train.py` developed an interactive CLI for diverse training modes.",
+        "phase3": "Phase 3 refined usability and performance. The interactive CLI was polished, and hyperparameters were likely tuned for optimal performance. Continuous consideration for a lightweight implementation ensured efficient operation during the intensive 4-day development."
+      },
+      "keyFeatures": [
+        {
+          "title": "Advanced Deep Q-Network (DQN) Agent with Dueling Architecture",
+          "description": "The AI's core intelligence, it learns optimal actions from game states to maximize future rewards. Dueling DQN improves value estimation by separating state-value and advantage functions.",
+          "implementation": "Implemented in `training/snake_ai.py` using PyTorch, the `DQN` class processes the 119-feature state, outputting state-value and advantage streams combined for Q-values. `torch.optim` updates weights, and `collections.deque` manages the experience replay buffer.",
+          "challenges": "Overcoming challenges included designing an effective network for complex state, correctly implementing Dueling DQN, and managing experience replay for stable learning."
+        },
+        {
+          "title": "Intelligent Reward Structure: Space Preservation",
+          "description": "This novel mechanism guides the AI to prioritize open space, preventing cornering and self-trapping, not just seeking food. It encourages long-term survival strategies.",
+          "implementation": "In `game/environment.py`, accessible space is calculated pre- and post-move. `space_reduction` results in a penalty (`-reduction * 0.5`), while `gaining space` provides a positive reward (`+abs(reduction) * 0.2`).",
+          "challenges": "Challenges included balancing immediate food gain with long-term survival, tuning coefficients for effective behavior shaping, and efficient real-time accessible space calculation."
+        },
+        {
+          "title": "Comprehensive 119-Feature State Representation",
+          "description": "Provides the AI with a rich, detailed understanding of the game world, enabling more informed and strategic decision-making. It goes beyond simple sensory inputs for complex play.",
+          "implementation": "Assembled in `game/environment.py`, the state vector combines immediate dangers, current/food directions, full grid representation, snake length, accessible space, BFS path to food, and crucial Hamiltonian path guidance with a `should_follow` flag.",
+          "challenges": "Integrating diverse data types (binary, one-hot, normalized numerical, grid map) into a coherent vector was key. Ensuring all crucial information was encoded effectively without redundancy and scaled appropriately for the neural network were also challenges."
+        },
+        {
+          "title": "Interactive Command-Line Interface (CLI) for Training",
+          "description": "Offers a user-friendly way for developers to configure and choose different training modes. This simplifies running experiments and debugging the AI agent.",
+          "implementation": "Implemented in `training/train.py`, the `interactive_menu()` displays options like 'Headless Training' for speed, 'Visual Training' for observation, and quick tests. User input directly controls training parameters and execution flow.",
+          "challenges": "Challenges included designing an intuitive menu, robustly handling user input, and correctly dispatching to appropriate training functions based on user selections."
+        },
+        {
+          "title": "Hamiltonian Cycle Pathfinding Integration",
+          "description": "Provides the AI with a strategic 'guide' through a pre-calculated non-trapping path (Hamiltonian cycle) across the game grid. This is especially useful in later stages to prevent the snake from getting stuck.",
+          "implementation": "The `algorithms/hamilton_cycle.py` generates the cycle. In `game/environment.py`, the AI's state vector includes one-hot encoded Hamiltonian path directions and a `should_follow` flag, directly informing decision-making.",
+          "challenges": "Key challenges involved integrating a classical graph algorithm into an RL state space and determining conditions for the AI to prioritize following the Hamiltonian path versus exploring."
+        }
+      ],
+      "testing": "Testing was integrated via `train.py` with `Quick Test (500 episodes, headless)` for sanity checks and `Quick Visual Demo (100 episodes)` for short feedback loops. 'Visual Training' provided crucial real-time debugging to observe AI behavior and identify issues. Iterative refinement, like the 'NEW REWARD STRUCTURE' and 'DUELING architecture' adoption, was driven by these observational tests.",
+      "results": {
+        "technicalAchievements": "Successfully implemented an advanced Dueling Deep Q-Network and crafted a sophisticated 119-feature state vector. Designed an innovative 'space preservation' reward structure for strategic long-term behavior. Developed a modular codebase and optimized performance for modest hardware, including headless training.",
+        "businessImpact": "SnakeBot strongly demonstrates developer expertise in Python, PyTorch, RL, neural network design, and algorithm integration. It showcases the ability to tackle complex, dynamic problems with structured, data-driven approaches. The project provides a robust foundation for future game AI or control system work.",
+        "personalGrowth": "Deepened understanding of Dueling DQNs, mastered reward function engineering and state space design. Gained practical experience integrating classical algorithms into RL, improving PyTorch proficiency and project structuring for complex AI systems."
+      },
+      "techStack": {
+        "frontend": null,
+        "backend": null,
+        "tools": "Python, NumPy, collections.deque",
+        "libraries": "PyTorch (torch, torch.nn, torch.optim) for deep learning; NumPy for numerical operations; collections.deque for experience replay."
+      },
+      "learnings": [
+        "A comprehensive and intelligently engineered state space, like the 119-feature vector, is paramount to an AI's ability to learn complex strategies.",
+        "Reward shaping, exemplified by the 'space preservation' structure, critically drives desired long-term behaviors and overcomes common RL pitfalls like self-trapping.",
+        "Hybrid AI approaches, combining learned policies with classical algorithms like BFS and Hamiltonian cycles, significantly enhance agent capabilities and robustness.",
+        "Practical development tools, such as an interactive CLI with headless and visual training modes, are vital for managing RL experiments and debugging effectively."
+      ],
+      "futureEnhancements": [
+        "Explore more advanced RL algorithms like Prioritized Experience Replay, Rainbow DQN, or policy gradient methods (PPO) for faster and more stable learning.",
+        "Implement automated hyperparameter tuning using tools like Optuna or Ray Tune to systematically optimize training parameters.",
+        "Generalize the environment to support arbitrary grid dimensions, moving beyond fixed-size assumptions for Hamiltonian cycles and grid representation.",
+        "Develop a polished web-based visualization or GUI to better showcase AI gameplay and training progress, increasing accessibility.",
+        "Implement robust functionality for saving and loading trained models via the CLI, enabling easier evaluation and sharing of best-performing agents."
+      ],
+      "conclusion": "SnakeBot successfully applies reinforcement learning to the classic Snake game, showcasing sophisticated AI design. It combines Dueling DQN with an intricately engineered state representation and a novel space-preservation reward, creating an agent capable of advanced strategic play. This project highlights proficiency in PyTorch, ML principles, and pragmatic problem-solving, serving as a strong testament to the developer's ability to build complex AI systems."
     }
   }
 }

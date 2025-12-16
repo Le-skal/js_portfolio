@@ -6,11 +6,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 // Helper function to convert JSON projects to carousel format
 const convertJsonToProjects = (jsonData) => {
-  const projectKeys = ["Scraping-boulanger", "TripHackathon", "ABDD"];
+  const projectKeys = ["Scraping-boulanger", "TripHackathon", "ABDD", "PublicTradeBot", "SnakeBot"];
   const imageMap = {
     "Scraping-boulanger": "/projects_img/project1.png",
     "TripHackathon": "/projects_img/project2.png",
-    "ABDD": "/projects_img/project3.png"
+    "ABDD": "/projects_img/project3.png",
+    "PublicTradeBot": "/projects_img/project4.png",
+    "SnakeBot": "/projects_img/project5.png"
   };
 
   return projectKeys.map((key, index) => {
@@ -147,7 +149,7 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
               <h4 className="text-white/50 uppercase tracking-wider text-xs font-medium mb-2">{t("projectDetail.timeline")}</h4>
               <p className="text-white/80">{project.fullData?.metadata?.timeline || "2024"}</p>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:col-span-2 lg:col-span-1">
+            <div className="flex flex-col gap-3 sm:col-span-2 lg:col-span-1">
               {project.fullData?.metadata?.liveUrl && project.fullData.metadata.liveUrl !== "null" && (
                 <a
                   href={project.fullData.metadata.liveUrl}
@@ -474,13 +476,13 @@ export const ProjectsModal = ({ onClose }) => {
   };
 
   // Helper to calculate the distance between two adjacent items (step)
-  const getStep = () => {
+  const getStep = useCallback(() => {
     const track = trackRef.current;
     if (!track || track.children.length < 2) return 0;
     const a = track.children[0].getBoundingClientRect();
     const b = track.children[1].getBoundingClientRect();
     return isMobile ? (b.top - a.top) : (b.left - a.left);
-  };
+  }, [isMobile]);
 
   // Center the middle item on mount and on resize
   React.useEffect(() => {
@@ -558,7 +560,7 @@ export const ProjectsModal = ({ onClose }) => {
         }, 800);
       }, 150);
     }, 150);
-  }, [isTransitioning]);
+  }, [isTransitioning, animStage, virtualCenter, carouselItems.length, getStep]);
 
   const handlePrev = useCallback(() => {
     if (isTransitioning || animStage !== "idle") return;
@@ -597,7 +599,7 @@ export const ProjectsModal = ({ onClose }) => {
         }, 800);
       }, 150);
     }, 150);
-  }, [isTransitioning]);
+  }, [isTransitioning, animStage, virtualCenter, carouselItems.length, getStep]);
 
   // Click-to-jump: move the carousel by n items (positive => to the right/next, negative => to the left/prev)
   const handleMoveBy = useCallback((n) => {
@@ -1044,104 +1046,104 @@ export const ProjectsModal = ({ onClose }) => {
 
         {/* Bottom navigation with connected arrows - desktop only */}
         {!isMobile && (
-        <div
-          className="fixed bottom-0 left-0 right-0 z-40 flex flex-col items-center justify-center bg-gradient-to-t from-black/80 to-transparent"
-          style={{ height: "15%" }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Single arrow element <---> that responds to clicks on arrow tips */}
-          <button
-            className="relative flex items-center justify-center cursor-pointer transition-all"
-            style={{
-              background: "transparent",
-              border: "none",
-              padding: 0,
-              width: "fit-content",
-              height: "fit-content",
-            }}
-            onMouseEnter={() => setIsHoveringArrows('both')}
-            onMouseLeave={() => setIsHoveringArrows(null)}
+          <div
+            className="fixed bottom-0 left-0 right-0 z-40 flex flex-col items-center justify-center bg-gradient-to-t from-black/80 to-transparent"
+            style={{ height: "15%" }}
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Centered double-sided arrow */}
-            <img
-              src="https://static.thenounproject.com/png/785425-200.png"
-              alt="navigation arrows"
-              className="cursor-pointer"
+            {/* Single arrow element <---> that responds to clicks on arrow tips */}
+            <button
+              className="relative flex items-center justify-center cursor-pointer transition-all"
               style={{
-                width: isMobile ? "5vw" : "10vw",
-                height: isMobile ? "10vw" : "5vw",
-                filter: isHoveringArrows ? 'invert(1) brightness(1.2)' : 'invert(1) brightness(0.8)',
-                transform: isMobile
-                  ? isHoveringArrows ? 'rotate(90deg) scale(1.1)' : 'rotate(90deg) scale(1)'
-                  : isHoveringArrows ? 'scale(1.1)' : 'scale(1)',
-                transition: 'all 0.2s ease-out, clip-path 0.2s ease-out',
-                zIndex: 60,
-                clipPath: isMobile
-                  ? (isHoveringArrows === 'right' ? 'inset(0 0 50% 0)' : isHoveringArrows === 'left' ? 'inset(50% 0 0 0)' : 'inset(0)')
-                  : (isHoveringArrows === 'right' ? 'inset(0 0 0 50%)' : isHoveringArrows === 'left' ? 'inset(0 50% 0 0)' : 'inset(0)'),
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                width: "fit-content",
+                height: "fit-content",
               }}
-            />
+              onMouseEnter={() => setIsHoveringArrows('both')}
+              onMouseLeave={() => setIsHoveringArrows(null)}
+            >
+              {/* Centered double-sided arrow */}
+              <img
+                src="https://static.thenounproject.com/png/785425-200.png"
+                alt="navigation arrows"
+                className="cursor-pointer"
+                style={{
+                  width: isMobile ? "5vw" : "10vw",
+                  height: isMobile ? "10vw" : "5vw",
+                  filter: isHoveringArrows ? 'invert(1) brightness(1.2)' : 'invert(1) brightness(0.8)',
+                  transform: isMobile
+                    ? isHoveringArrows ? 'rotate(90deg) scale(1.1)' : 'rotate(90deg) scale(1)'
+                    : isHoveringArrows ? 'scale(1.1)' : 'scale(1)',
+                  transition: 'all 0.2s ease-out, clip-path 0.2s ease-out',
+                  zIndex: 60,
+                  clipPath: isMobile
+                    ? (isHoveringArrows === 'right' ? 'inset(0 0 50% 0)' : isHoveringArrows === 'left' ? 'inset(50% 0 0 0)' : 'inset(0)')
+                    : (isHoveringArrows === 'right' ? 'inset(0 0 0 50%)' : isHoveringArrows === 'left' ? 'inset(0 50% 0 0)' : 'inset(0)'),
+                }}
+              />
 
-            {/* Hidden clickable areas for left and right navigation */}
-            <div
-              className="absolute cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                handlePrev();
-              }}
-              onMouseEnter={() => setIsHoveringArrows('left')}
-              onMouseLeave={() => setIsHoveringArrows('both')}
-              style={isMobile ? {
-                left: 0,
-                right: 0,
-                top: 0,
-                height: "50%",
-                zIndex: 70,
-                background: "transparent",
-              } : {
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: "50%",
-                zIndex: 70,
-                background: "transparent",
-              }}
-            />
-            <div
-              className="absolute cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                handleNext();
-              }}
-              onMouseEnter={() => setIsHoveringArrows('right')}
-              onMouseLeave={() => setIsHoveringArrows('both')}
-              style={isMobile ? {
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: "50%",
-                zIndex: 70,
-                background: "transparent",
-              } : {
-                right: 0,
-                top: 0,
-                bottom: 0,
-                width: "50%",
-                zIndex: 70,
-                background: "transparent",
-              }}
-            />
-          </button>
+              {/* Hidden clickable areas for left and right navigation */}
+              <div
+                className="absolute cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  handlePrev();
+                }}
+                onMouseEnter={() => setIsHoveringArrows('left')}
+                onMouseLeave={() => setIsHoveringArrows('both')}
+                style={isMobile ? {
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  height: "50%",
+                  zIndex: 70,
+                  background: "transparent",
+                } : {
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: "50%",
+                  zIndex: 70,
+                  background: "transparent",
+                }}
+              />
+              <div
+                className="absolute cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  handleNext();
+                }}
+                onMouseEnter={() => setIsHoveringArrows('right')}
+                onMouseLeave={() => setIsHoveringArrows('both')}
+                style={isMobile ? {
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: "50%",
+                  zIndex: 70,
+                  background: "transparent",
+                } : {
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: "50%",
+                  zIndex: 70,
+                  background: "transparent",
+                }}
+              />
+            </button>
 
-          {/* Instructions hint */}
-          <div className="text-center pointer-events-none" style={{ marginTop: "2vh" }}>
-            <p className="uppercase tracking-widest" style={{ fontSize: "1vw", color: "rgba(255, 255, 255, 0.2)" }}>
-              Drag • Click Arrows
-            </p>
+            {/* Instructions hint */}
+            <div className="text-center pointer-events-none" style={{ marginTop: "2vh" }}>
+              <p className="uppercase tracking-widest" style={{ fontSize: "1vw", color: "rgba(255, 255, 255, 0.2)" }}>
+                Drag • Click Arrows
+              </p>
+            </div>
           </div>
-        </div>
         )}
       </div>
     </>
