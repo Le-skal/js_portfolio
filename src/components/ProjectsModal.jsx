@@ -1,8 +1,9 @@
 import { X, ExternalLink, Github } from "lucide-react";
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import JsBackground from "./JsBackground";
 import { CustomCloseButton } from "./CustomCloseButton";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useParams, useNavigate } from "react-router-dom";
 
 // Helper function to convert JSON projects to carousel format
 const convertJsonToProjects = (jsonData) => {
@@ -390,6 +391,8 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
 
 export const ProjectsModal = ({ onClose }) => {
   const { language } = useLanguage();
+  const { projectKey } = useParams();
+  const navigate = useNavigate();
   const [showProjectDetail, setShowProjectDetail] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [scrollToBottom, setScrollToBottom] = useState(false);
@@ -412,8 +415,30 @@ export const ProjectsModal = ({ onClose }) => {
     loadProjects();
   }, [language]);
 
-  // Get projects based on current language
-  const projects = projectsData ? convertJsonToProjects(projectsData) : [];
+  // Get projects based on current language - memoize to prevent infinite loop
+  const projects = useMemo(() => {
+    return projectsData ? convertJsonToProjects(projectsData) : [];
+  }, [projectsData]);
+
+  // Handle URL-based project selection
+  useEffect(() => {
+    if (projectKey && projectsData) {
+      const projectsList = convertJsonToProjects(projectsData);
+      const project = projectsList.find(p => p.key === projectKey);
+      if (project) {
+        setSelectedProject(project);
+        setShowProjectDetail(true);
+        // Update document title with project name
+        document.title = `${project.title} | Raphael Skal - Portfolio`;
+      } else {
+        // Invalid project key, redirect to projects list
+        navigate('/projects', { replace: true });
+      }
+    } else if (!projectKey) {
+      // Reset title when on projects list
+      document.title = "Projects | Raphael Skal - Portfolio";
+    }
+  }, [projectKey, projectsData, navigate]); // Use projectsData instead of projects array
 
   // Detect mobile screen size
   useEffect(() => {
@@ -823,7 +848,7 @@ export const ProjectsModal = ({ onClose }) => {
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
   const handleOpenProjectDetail = (project) => {
-    setSelectedProject(project);
+    navigate(`/project/${project.key}`);
     setIsMinimizingCarousel(true);
   };
 
@@ -832,6 +857,7 @@ export const ProjectsModal = ({ onClose }) => {
     setScrollToBottom(false);
     setIsCarouselEntering(true);
     setIsMinimizingCarousel(false);
+    navigate('/projects');
     setTimeout(() => {
       setSelectedProject(null);
     }, 600);

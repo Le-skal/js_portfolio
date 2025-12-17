@@ -1,46 +1,18 @@
 import { Navbar } from "../components/Navbar";
 import LiquidEther from "../components/LiquidEther";
 import { HeroSection } from "../components/HeroSection";
-import { AboutSection } from "../components/AboutSection";
-import { ProjectsSection } from "../components/ProjectsSection";
-import { ProjectsModal } from "../components/ProjectsModal";
-import { ContactSection } from "../components/ContactSection";
-import { TerminalPopup } from "../components/TerminalPopup";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Home = () => {
-  const [openWindows, setOpenWindows] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Raphael Skal - Data Engineer & Developer";
+  }, []);
 
   const handleOpenWindow = (windowId) => {
-    window.dispatchEvent(new CustomEvent('popupOpen', { detail: windowId }));
-    setOpenWindows((prev) => ({
-      ...prev,
-      [windowId]: true,
-    }));
-  };
-
-  const handleCloseWindow = (windowId) => {
-    // Dispatch close event so the window can play its exit animation.
-    // Delay removal from state so the animation has time to finish.
-    window.dispatchEvent(new CustomEvent('popupClose', { detail: windowId }));
-
-    // Contact popup handles animation internally, no delay needed
-    // Other windows: 500ms for their animations
-    const delay = windowId === 'contact' ? 0 : 500;
-
-    setTimeout(() => {
-      setOpenWindows((prev) => {
-        const updated = { ...prev };
-        delete updated[windowId];
-        return updated;
-      });
-    }, delay);
-  };
-
-  const windowTitles = {
-    about: "About Le Skal",
-    projects: "My Projects",
-    contact: "Contact",
+    navigate(`/${windowId}`);
   };
 
   return (
@@ -66,29 +38,10 @@ export const Home = () => {
         />
       </div>
 
-      {/* Navbar - hide when projects or about is open */}
-      {!openWindows.projects && !openWindows.about && <Navbar hideLanguageToggle={openWindows.contact} />}
+      <Navbar />
       {/* Main Content */}
       <main style={{ position: 'relative', zIndex: 1 }}>
-        {!openWindows.projects && !openWindows.about && <HeroSection onOpenWindow={handleOpenWindow} />}
-        {/* Full Page Sections */}
-        {openWindows.about && (
-          <AboutSection onClose={() => handleCloseWindow("about")} />
-        )}
-        {/* Popups */}
-        {openWindows.projects && (
-          <ProjectsModal
-            onClose={() => handleCloseWindow("projects")}
-          />
-        )}
-        {openWindows.contact && (
-          <TerminalPopup
-            title="CONTACT.EXE"
-            onClose={() => handleCloseWindow("contact")}
-          >
-            <ContactSection isPopup />
-          </TerminalPopup>
-        )}
+        <HeroSection onOpenWindow={handleOpenWindow} />
       </main>
     </div>
   );
