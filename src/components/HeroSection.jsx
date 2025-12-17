@@ -114,8 +114,8 @@ export const HeroSection = ({ onOpenWindow }) => {
 
               {/* Description with better spacing */}
               <div className="max-w-3xl mx-auto">
-                <p className="text-lg sm:text-xl md:text-2xl text-foreground/80 font-light leading-relaxed tracking-wide
-                            px-4 py-6 rounded-2xl backdrop-blur-sm bg-background/5 border border-foreground/5">
+                <p className="text-[#b0bec5] text-xl md:text-2xl italic tracking-wide"
+                   style={{ textShadow: 'rgba(0, 0, 0, 0.3) 0px 2px 8px' }}>
                   {t("hero.description")}
                 </p>
               </div>

@@ -15,7 +15,7 @@ export const translations = {
       name: "Le",
       lastname: "Skal",
       description:
-        "Data Science student at ECE Paris pursuing a Bachelor's degree. Currently working as a Data Analyst apprentice, with the goal of becoming a Data Scientist. Passionate about transforming data into actionable insights.",
+        "Aspiring Data Scientist",
       cta: "View My Work",
       cv: "My CV",
     },
@@ -122,7 +122,7 @@ export const translations = {
       name: "Le",
       lastname: "Skal",
       description:
-        "Étudiant en Data Science à l’ECE Paris, en licence. Actuellement en apprentissage en tant que Data Analyst, avec pour objectif de devenir Data Scientist. Passionné par la transformation des données en informations exploitables.",
+        "Futur chercheur en IA",
       cta: "Voir Mon Travail",
       cv: "Mon CV",
     },
