@@ -184,6 +184,8 @@ const ProjectDetail = ({ project, onBack, onClose, scrollToBottom }) => {
                 src={project.image}
                 alt={project.title}
                 className="w-full h-auto object-contain"
+                loading="eager"
+                fetchpriority="high"
               />
             </div>
 
@@ -999,6 +1001,8 @@ export const ProjectsModal = ({ onClose }) => {
                     alt={item.title}
                     className="w-full h-auto object-contain block"
                     draggable={false}
+                    loading="eager"
+                    fetchpriority="high"
                     onMouseEnter={() => setIsHoveringImage(true)}
                     onMouseLeave={() => {
                       setIsHoveringImage(false);

@@ -37,7 +37,7 @@ const FloatingDockMobile = ({ items, className }) => {
   };
 
   return (
-    <div className={cn("fixed bottom-3 left-1/2 -translate-x-1/2 z-50 block md:hidden", className)}>
+    <div className={cn("fixed bottom-[5%] left-1/2 -translate-x-1/2 z-50 block md:hidden", className)}>
       <div className="flex gap-2 items-center bg-foreground/5 backdrop-blur-xl px-3 py-2 rounded-xl border border-foreground/10">
         {items.map((item, idx) => (
           <React.Fragment key={item.title}>
@@ -117,7 +117,7 @@ const FloatingDockDesktop = ({ items, className }) => {
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden md:flex h-20 md:h-22 lg:h-24 gap-4 md:gap-5 lg:gap-6 items-end rounded-xl md:rounded-2xl bg-foreground/5 backdrop-blur-xl px-4 md:px-5 lg:px-6 pb-3 md:pb-3.5 lg:pb-4 border border-foreground/10 w-fit",
+        "fixed bottom-[5%] left-1/2 -translate-x-1/2 z-50 hidden md:flex h-20 md:h-22 lg:h-24 gap-4 md:gap-5 lg:gap-6 items-center rounded-xl md:rounded-2xl bg-foreground/5 backdrop-blur-xl px-4 md:px-5 lg:px-6 border border-foreground/10 w-fit",
         className
       )}
     >
@@ -125,7 +125,7 @@ const FloatingDockDesktop = ({ items, className }) => {
         <React.Fragment key={item.title}>
           <IconContainer mouseX={mouseX} {...item} />
           {idx === 2 && (
-            <div className="w-px h-12 md:h-14 lg:h-16 bg-foreground/20 mt-5 md:mt-6 lg:mt-8 mb-0" />
+            <div className="w-px h-12 md:h-14 lg:h-16 bg-foreground/20" />
           )}
         </React.Fragment>
       ))}

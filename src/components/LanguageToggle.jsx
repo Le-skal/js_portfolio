@@ -85,11 +85,9 @@ export const LanguageToggle = () => {
         animate={isOpen ? "open" : "closed"}
         initial="closed"
         style={{
-          borderRadius: isOpen ? '1.5rem' : '1.5rem',
+          borderRadius: '0.75rem',
           overflow: 'hidden',
-          background: isOpen
-            ? 'rgba(0, 0, 0, 0.6)'
-            : 'rgba(255, 255, 255, 0.05)',
+          background: 'rgba(255, 255, 255, 0.05)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -111,8 +109,8 @@ export const LanguageToggle = () => {
         {/* Language Panel - appears when open */}
         <AnimatePresence>
           {isOpen && (
-            <div className="relative h-full p-4" style={{ perspective: 1200 }}>
-              <div className="space-y-2 mt-12">
+            <div className="relative h-full p-2" style={{ perspective: 1200 }}>
+              <div className="space-y-2 mt-12 pb-2">
                 {languages.map((lang, index) => {
                   const isActive = language === lang.code;
                   return (

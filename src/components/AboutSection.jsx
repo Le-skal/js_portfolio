@@ -133,7 +133,13 @@ export const AboutSection = ({ onClose }) => {
               </div>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 sm:mb-8 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
+            <h1
+              className="font-medieval text-black dark:text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 sm:mb-8"
+              style={{
+                textShadow: 'rgba(100, 181, 246, 0.3) 0px 4px 20px, rgba(0, 0, 0, 0.5) 0px 2px 8px',
+                filter: 'drop-shadow(rgba(100, 181, 246, 0.2) 0px 0px 30px)'
+              }}
+            >
               {aboutData.profile.headline}
             </h1>
 

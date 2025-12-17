@@ -41,6 +41,22 @@ export const HeroSection = ({ onOpenWindow }) => {
     },
   ];
 
+  // Preload carousel images on mount for faster loading
+  useEffect(() => {
+    const carouselImages = [
+      "/projects_img/project1.png",
+      "/projects_img/project2.png",
+      "/projects_img/project3.png",
+      "/projects_img/project4.png",
+      "/projects_img/project5.png"
+    ];
+
+    carouselImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   // Listen for popup opens to hide hero
   useEffect(() => {
     const handlePopupOpen = () => {
@@ -63,54 +79,54 @@ export const HeroSection = ({ onOpenWindow }) => {
   }, [language, t]);
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 sm:px-8 lg:px-12 pt-24 pb-16"
-    >
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
+    <>
+      <section
+        id="hero"
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 sm:px-8 lg:px-12 pt-24 pb-16 select-none"
+      >
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        </div>
 
-      <div className="container max-w-6xl mx-auto text-center z-10">
-        {showHero && (
-          <div className="space-y-16 animate-text-fade">
-            {/* Main heading with enhanced layout */}
-            <div className="space-y-8">
-              <div className="relative">
-                <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter leading-none">
-                  <span className="text-transparent bg-clip-text inline-block hover:scale-105 transition-transform duration-300"
-                    style={{
-                      backgroundImage: 'linear-gradient(90deg, #a78bfa, #c084fc, #f0abfc, #c084fc, #a78bfa)',
-                      backgroundSize: '200% 100%',
-                      animation: 'gradient-shift 8s ease-in-out infinite'
-                    }}>
-                    {t("hero.name")} {t("hero.lastname")}
-                  </span>
-                </h2>
-                {/* Subtle underline effect */}
-                <div className="h-1 w-32 sm:w-40 md:w-48 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400
-                              mx-auto mt-6 rounded-full opacity-60 animate-pulse-subtle" />
+        <div className="container max-w-6xl mx-auto text-center z-10">
+          {showHero && (
+            <div className="space-y-16 animate-text-fade">
+              {/* Main heading with enhanced layout */}
+              <div className="space-y-8">
+                <div className="relative">
+                  <h1 className="font-medieval text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-none">
+                    <span className="text-transparent bg-clip-text inline-block"
+                      style={{
+                        backgroundImage: 'linear-gradient(90deg, #a78bfa, #c084fc, #f0abfc, #c084fc, #a78bfa)',
+                        backgroundSize: '200% 100%',
+                        animation: 'gradient-shift 8s ease-in-out infinite'
+                      }}>
+                      {t("hero.name")} {t("hero.lastname")}
+                    </span>
+                  </h1>
+                  {/* Subtle underline effect */}
+                  <div className="h-1 w-32 sm:w-40 md:w-48 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400
+                                mx-auto mt-6 rounded-full opacity-60 animate-pulse-subtle" />
+                </div>
               </div>
-            </div>
 
-            {/* Description with better spacing */}
-            <div className="max-w-3xl mx-auto">
-              <p className="text-lg sm:text-xl md:text-2xl text-foreground/80 font-light leading-relaxed tracking-wide
-                          px-4 py-6 rounded-2xl backdrop-blur-sm bg-background/5 border border-foreground/5">
-                {t("hero.description")}
-              </p>
-            </div>
+              {/* Description with better spacing */}
+              <div className="max-w-3xl mx-auto">
+                <p className="text-lg sm:text-xl md:text-2xl text-foreground/80 font-light leading-relaxed tracking-wide
+                            px-4 py-6 rounded-2xl backdrop-blur-sm bg-background/5 border border-foreground/5">
+                  {t("hero.description")}
+                </p>
+              </div>
 
-            {/* Floating Dock */}
-            <div className="pt-12">
-              <FloatingDock items={dockLinks} />
             </div>
+          )}
+        </div>
+      </section>
 
-          </div>
-        )}
-      </div>
-    </section>
+      {/* Floating Dock - always visible */}
+      <FloatingDock items={dockLinks} />
+    </>
   );
 };
