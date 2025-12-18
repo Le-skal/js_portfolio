@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 
 const LanguageContext = createContext();
 
@@ -221,7 +222,33 @@ export const translations = {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState("en");
+  const { lang } = useParams();
+  const location = useLocation();
+
+  // Get language from URL, localStorage, or default to "en"
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem('language');
+    return saved && (saved === 'en' || saved === 'fr') ? saved : 'en';
+  });
+
+  // Update language when URL changes
+  useEffect(() => {
+    if (lang && (lang === 'en' || lang === 'fr')) {
+      setLanguage(lang);
+    }
+  }, [lang, location.pathname]);
+
+  // Update localStorage and HTML lang attribute when language changes
+  useEffect(() => {
+    localStorage.setItem('language', language);
+    document.documentElement.lang = language;
+  }, [language]);
+
+  const changeLanguage = (newLang) => {
+    if (newLang === 'en' || newLang === 'fr') {
+      setLanguage(newLang);
+    }
+  };
 
   const t = (key) => {
     const keys = key.split(".");
@@ -235,7 +262,7 @@ export const LanguageProvider = ({ children }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -3,16 +3,18 @@ import LiquidEther from "../components/LiquidEther";
 import { HeroSection } from "../components/HeroSection";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Home = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   useEffect(() => {
     document.title = "Raphael Skal - Data Engineer & Developer";
   }, []);
 
   const handleOpenWindow = (windowId) => {
-    navigate(`/${windowId}`);
+    navigate(`/${language}/${windowId}`);
   };
 
   return (

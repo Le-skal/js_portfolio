@@ -432,7 +432,7 @@ export const ProjectsModal = ({ onClose }) => {
         document.title = `${project.title} | Raphael Skal - Portfolio`;
       } else {
         // Invalid project key, redirect to projects list
-        navigate('/projects', { replace: true });
+        navigate(`/${language}/projects`, { replace: true });
       }
     } else if (!projectKey) {
       // Reset title when on projects list

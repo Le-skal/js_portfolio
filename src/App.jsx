@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
@@ -43,11 +43,20 @@ const AppRoutes = () => {
 
   return (
     <Routes key={location.pathname}>
+      {/* Routes without language prefix */}
       <Route index element={<Home key="home" />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/projects" element={<ProjectsPage />} />
       <Route path="/project/:projectKey" element={<ProjectsPage />} />
       <Route path="/contact" element={<ContactPage />} />
+
+      {/* Routes with language prefix */}
+      <Route path="/:lang" element={<Home key="home" />} />
+      <Route path="/:lang/about" element={<AboutPage />} />
+      <Route path="/:lang/projects" element={<ProjectsPage />} />
+      <Route path="/:lang/project/:projectKey" element={<ProjectsPage />} />
+      <Route path="/:lang/contact" element={<ContactPage />} />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
@@ -57,11 +66,11 @@ function App() {
   return (
     <>
       <Toaster />
-      <LanguageProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <LanguageProvider>
           <AppRoutes />
-        </BrowserRouter>
-      </LanguageProvider>
+        </LanguageProvider>
+      </BrowserRouter>
     </>
   );
 }
